@@ -29,3 +29,17 @@ models:
     marts:
       +materialized: table
       +schema: marts
+
+
+seeds:
+  my_new_project:
+    listings_all:
+      +schema: bronze
+    census_g01:
+      +schema: bronze
+    census_g02:
+      +schema: bronze
+    nsw_lga_code:
+      +schema: bronze
+    nsw_lga_suburb:
+      +schema: bronze
