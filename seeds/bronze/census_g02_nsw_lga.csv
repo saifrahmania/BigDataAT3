@@ -1,4 +1,4 @@
-LGA_CODE_2016,Median_age_persons,Median_mortgage_repay_monthly,Median_tot_prsnl_inc_weekly,Median_rent_weekly,Median_tot_fam_inc_weekly,Average_num_psns_per_bedroom,Median_tot_hhd_inc_weekly,Average_household_size
+lga_code_2016,median_age_persons,median_mortgage_repay_monthly,median_tot_prsnl_inc_weekly,median_rent_weekly,median_tot_fam_inc_weekly,average_num_psns_per_bedroom,median_tot_hhd_inc_weekly,average_household_size
 LGA10050,39,1421,642,231,1532,0.8,1185,2.3
 LGA10130,36,1393,561,250,1465,0.8,1173,2.4
 LGA10250,48,1733,601,340,1426,0.8,1156,2.3
