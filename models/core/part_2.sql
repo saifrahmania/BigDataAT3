@@ -38,4 +38,4 @@ typed AS (
     FROM listings_raw
 )
 
-SELECT * FROM typed;
+SELECT * FROM typed

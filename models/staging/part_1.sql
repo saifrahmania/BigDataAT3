@@ -32,4 +32,4 @@ WITH listings_raw AS (
     FROM {{ ref('listings_raw') }}
 )
 
-SELECT * FROM listings_raw;
+SELECT * FROM listings_raw

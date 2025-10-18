@@ -56,4 +56,4 @@ WITH typed AS (
     GROUP BY listing_id, year_month
 )
 
-SELECT * FROM monthly_rollup;
+SELECT * FROM monthly_rollup

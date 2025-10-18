@@ -88,4 +88,4 @@ SELECT
     AVG(median_age),
     AVG(avg_household_size),
     AVG(revenue_per_active_listing)
-FROM bottom13;
+FROM bottom13
