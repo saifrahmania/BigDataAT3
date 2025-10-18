@@ -2,106 +2,85 @@ version: 2
 
 seeds:
   - name: census_g01_nsw_lga
-    description: "Raw Census G01 demographic data for NSW Local Government Areas (LGAs)."
+    description: "Raw Census G01 demographic data for NSW LGAs"
     columns:
       - name: LGA_CODE_2016
-        description: "Unique LGA identifier code for the 2016 Census."
+        description: "Unique LGA identifier code for 2016 Census"
         tests:
           - not_null
           - unique
 
   - name: census_g02_nsw_lga
-    description: "Raw Census G02 socioeconomic data for NSW Local Government Areas (LGAs)."
+    description: "Raw Census G02 socioeconomic data for NSW LGAs"
     columns:
       - name: LGA_CODE_2016
-        description: "Unique LGA identifier code for the 2016 Census."
+        description: "Unique LGA identifier code for 2016 Census"
         tests:
           - not_null
           - unique
+
+  - name: listings_raw_part_1
+    description: "First partition of Airbnb raw listings data"
+  - name: listings_raw_part_2
+    description: "Second partition of Airbnb raw listings data"
+  - name: listings_raw_part_3
+    description: "Third partition of Airbnb raw listings data"
+  - name: listings_raw_part_4
+    description: "Fourth partition of Airbnb raw listings data"
+  - name: listings_raw_part_5
+    description: "Fifth partition of Airbnb raw listings data"
+  - name: listings_raw_part_6
+    description: "Sixth partition of Airbnb raw listings data"
+  - name: listings_raw_part_7
+    description: "Seventh partition of Airbnb raw listings data"
+  - name: listings_raw_part_8
+    description: "Eighth partition of Airbnb raw listings data"
+  - name: listings_raw_part_9
+    description: "Ninth partition of Airbnb raw listings data"
+  - name: listings_raw_part_10
+    description: "Tenth partition of Airbnb raw listings data"
+  - name: listings_raw_part_11
+    description: "Eleventh partition of Airbnb raw listings data"
+  - name: listings_raw_part_12
+    description: "Twelfth partition of Airbnb raw listings data"
+  - name: listings_raw_part_13
+    description: "Thirteenth partition of Airbnb raw listings data"
+  - name: listings_raw_part_14
+    description: "Fourteenth partition of Airbnb raw listings data"
+  - name: listings_raw_part_15
+    description: "Fifteenth partition of Airbnb raw listings data"
+  - name: listings_raw_part_16
+    description: "Sixteenth partition of Airbnb raw listings data"
+  - name: listings_raw_part_17
+    description: "Seventeenth partition of Airbnb raw listings data"
+  - name: listings_raw_part_18
+    description: "Eighteenth partition of Airbnb raw listings data"
+  - name: listings_raw_part_19
+    description: "Nineteenth partition of Airbnb raw listings data"
+  - name: listings_raw_part_20
+    description: "Twentieth partition of Airbnb raw listings data"
+  - name: listings_raw_part_21
+    description: "Twenty-first partition of Airbnb raw listings data"
 
   - name: nsw_lga_code
-    description: "Mapping of NSW Local Government Area codes to their official names."
+    description: "Mapping between NSW LGA codes and names"
     columns:
       - name: LGA_CODE
-        description: "Unique numerical code for the LGA."
+        description: "Unique LGA code"
         tests:
           - not_null
           - unique
       - name: LGA_NAME
-        description: "Human-readable name of the LGA."
+        description: "Readable LGA name"
 
   - name: nsw_lga_suburb
-    description: "Mapping between NSW suburbs and their corresponding Local Government Areas."
+    description: "Mapping between NSW suburbs and their corresponding LGAs"
     columns:
       - name: LGA_NAME
-        description: "Name of the Local Government Area."
+        description: "Name of the LGA"
         tests:
           - not_null
       - name: SUBURB_NAME
-        description: "Name of the suburb located within the LGA."
+        description: "Name of the suburb"
         tests:
           - not_null
-
-  # ============================================================
-  # Split Listings Raw Parts (21 files)
-  # ============================================================
-  # Each represents a partition of the original raw Airbnb listings data.
-  # dbt will treat each as a separate seed table, which can later be UNIONed.
-  # ============================================================
-
-  - name: listings_raw_part_1
-    description: "Raw Airbnb listing data (part 1 of 21) - split for dbt Cloud compatibility."
-    columns:
-      - name: LISTING_ID
-        description: "Unique identifier for the Airbnb listing."
-        tests:
-          - not_null
-      - name: HOST_ID
-        description: "Identifier for the host who owns the listing."
-        tests:
-          - not_null
-      - name: YEAR_MONTH
-        description: "Year and month of data capture (e.g., 2020-05)."
-        tests:
-          - not_null
-
-  - name: listings_raw_part_2
-    description: "Raw Airbnb listing data (part 2 of 21)."
-  - name: listings_raw_part_3
-    description: "Raw Airbnb listing data (part 3 of 21)."
-  - name: listings_raw_part_4
-    description: "Raw Airbnb listing data (part 4 of 21)."
-  - name: listings_raw_part_5
-    description: "Raw Airbnb listing data (part 5 of 21)."
-  - name: listings_raw_part_6
-    description: "Raw Airbnb listing data (part 6 of 21)."
-  - name: listings_raw_part_7
-    description: "Raw Airbnb listing data (part 7 of 21)."
-  - name: listings_raw_part_8
-    description: "Raw Airbnb listing data (part 8 of 21)."
-  - name: listings_raw_part_9
-    description: "Raw Airbnb listing data (part 9 of 21)."
-  - name: listings_raw_part_10
-    description: "Raw Airbnb listing data (part 10 of 21)."
-  - name: listings_raw_part_11
-    description: "Raw Airbnb listing data (part 11 of 21)."
-  - name: listings_raw_part_12
-    description: "Raw Airbnb listing data (part 12 of 21)."
-  - name: listings_raw_part_13
-    description: "Raw Airbnb listing data (part 13 of 21)."
-  - name: listings_raw_part_14
-    description: "Raw Airbnb listing data (part 14 of 21)."
-  - name: listings_raw_part_15
-    description: "Raw Airbnb listing data (part 15 of 21)."
-  - name: listings_raw_part_16
-    description: "Raw Airbnb listing data (part 16 of 21)."
-  - name: listings_raw_part_17
-    description: "Raw Airbnb listing data (part 17 of 21)."
-  - name: listings_raw_part_18
-    description: "Raw Airbnb listing data (part 18 of 21)."
-  - name: listings_raw_part_19
-    description: "Raw Airbnb listing data (part 19 of 21)."
-  - name: listings_raw_part_20
-    description: "Raw Airbnb listing data (part 20 of 21)."
-  - name: listings_raw_part_21
-    description: "Raw Airbnb listing data (part 21 of 21)."
