@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: part_2
+    description: "Core model joining census and listing base"
+    columns:
+      - name: id
+        description: "Unique identifier"
+        tests:
+          - not_null

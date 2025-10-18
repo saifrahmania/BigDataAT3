@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: part_3
+    description: "Mart model: Summary of listings per suburb per month"
+    columns:
+      - name: suburb
+        description: "NSW suburb name"
+      - name: total_listings
+        description: "Count of listings"
+        tests:
+          - not_null
+
+  - name: part_4
+    description: "Mart model: Aggregated statistics per LGA"
+    columns:
+      - name: lga
+        description: "NSW Local Government Area"
+        tests:
+          - not_null

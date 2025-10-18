@@ -1,0 +1,17 @@
+version: 2
+
+seeds:
+  - name: census_g01_nsw_lga
+    description: "Raw G01 Census data (e.g. age, gender, household) by NSW LGA"
+
+  - name: census_g02_nsw_lga
+    description: "Raw G02 Census data (e.g. education, employment) by NSW LGA"
+
+  - name: listings_raw
+    description: "Original scraped Airbnb listing data with no cleaning applied"
+
+  - name: nsw_lga_code
+    description: "Mapping of NSW LGA codes to LGA names"
+
+  - name: nsw_lga_suburb
+    description: "Mapping of suburbs to their corresponding LGAs"

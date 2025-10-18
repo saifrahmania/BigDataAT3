@@ -1,0 +1,30 @@
+version: 2
+
+seeds:
+  - name: dim_host
+    description: "Dimension table for host metadata"
+
+  - name: dim_property
+    description: "Dimension table for property metadata"
+
+  - name: dm_host_neighbourhood
+    description: "Host-level neighborhood aggregation"
+
+  - name: dm_listing_neighbourhood
+    description: "Listing-level neighborhood aggregation"
+
+  - name: dm_property_type
+    description: "Mapping and analysis of property types"
+
+  - name: fact_listing_monthly
+    description: "Fact table of listings aggregated by month"
+    columns:
+      - name: listing_id
+        description: "Unique identifier of the listing"
+        tests:
+          - not_null
+          - unique
+      - name: month
+        description: "The reporting month (YYYY-MM)"
+        tests:
+          - not_null

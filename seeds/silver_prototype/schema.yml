@@ -1,0 +1,20 @@
+version: 2
+
+seeds:
+  - name: census_g01_silver
+    description: "Processed Census G01 demographic data for NSW LGAs"
+
+  - name: census_g02_silver
+    description: "Processed Census G02 socioeconomic data for NSW LGAs"
+
+  - name: listings_base
+    description: "Base listing data with selected key columns cleaned and standardised"
+
+  - name: listing_monthly
+    description: "Aggregated monthly metrics for listings (e.g. availability, pricing)"
+
+  - name: nsw_lga_code_silver
+    description: "Silver layer mapping of LGA codes to names with clean formatting"
+
+  - name: nsw_lga_suburb_silver
+    description: "Silver layer cleaned mapping of suburb to LGA"
