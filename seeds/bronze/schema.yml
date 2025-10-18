@@ -2,16 +2,59 @@ version: 2
 
 seeds:
   - name: census_g01_nsw_lga
-    description: "Raw G01 Census data (e.g. age, gender, household) by NSW LGA"
+    description: "Raw Census G01 demographic data for NSW LGAs"
+    columns:
+      - name: LGA_CODE_2016
+        description: "Unique LGA identifier code for 2016 Census"
+        tests:
+          - not_null
+          - unique
 
   - name: census_g02_nsw_lga
-    description: "Raw G02 Census data (e.g. education, employment) by NSW LGA"
+    description: "Raw Census G02 socioeconomic data for NSW LGAs"
+    columns:
+      - name: LGA_CODE_2016
+        description: "Unique LGA identifier code for 2016 Census"
+        tests:
+          - not_null
+          - unique
 
   - name: listings_raw
-    description: "Original scraped Airbnb listing data with no cleaning applied"
+    description: "Raw Airbnb listing data (before transformation)"
+    columns:
+      - name: LISTING_ID
+        description: "Unique listing identifier"
+        tests:
+          - not_null
+          - unique
+      - name: HOST_ID
+        description: "Identifier of the host who owns the listing"
+        tests:
+          - not_null
+      - name: YEAR_MONTH
+        description: "Year and month when listing was scraped (e.g. 2020-05)"
+        tests:
+          - not_null
 
   - name: nsw_lga_code
-    description: "Mapping of NSW LGA codes to LGA names"
+    description: "Mapping between NSW LGA codes and names"
+    columns:
+      - name: LGA_CODE
+        description: "Unique LGA code"
+        tests:
+          - not_null
+          - unique
+      - name: LGA_NAME
+        description: "Readable LGA name"
 
   - name: nsw_lga_suburb
-    description: "Mapping of suburbs to their corresponding LGAs"
+    description: "Mapping between NSW suburbs and their corresponding LGAs"
+    columns:
+      - name: LGA_NAME
+        description: "Name of the LGA"
+        tests:
+          - not_null
+      - name: SUBURB_NAME
+        description: "Name of the suburb"
+        tests:
+          - not_null

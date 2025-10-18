@@ -2,29 +2,48 @@ version: 2
 
 seeds:
   - name: dim_host
-    description: "Dimension table for host metadata"
+    description: "Dimension table containing host metadata"
+    columns:
+      - name: host_id
+        tests:
+          - unique
+          - not_null
+      - name: host_name
+        description: "Name of the host"
 
   - name: dim_property
-    description: "Dimension table for property metadata"
-
-  - name: dm_host_neighbourhood
-    description: "Host-level neighborhood aggregation"
-
-  - name: dm_listing_neighbourhood
-    description: "Listing-level neighborhood aggregation"
-
-  - name: dm_property_type
-    description: "Mapping and analysis of property types"
-
-  - name: fact_listing_monthly
-    description: "Fact table of listings aggregated by month"
+    description: "Dimension table for property details"
     columns:
       - name: listing_id
-        description: "Unique identifier of the listing"
         tests:
-          - not_null
           - unique
-      - name: month
-        description: "The reporting month (YYYY-MM)"
+          - not_null
+      - name: property_type
+        description: "Type of property (e.g., Apartment, House)"
+      - name: accommodates
+        description: "Number of guests the property can accommodate"
+
+  - name: fact_listing_monthly
+    description: "Fact table aggregating listings by month"
+    columns:
+      - name: listing_id
+        tests:
+          - unique
+          - not_null
+      - name: year_month
+        description: "Year-month reference"
         tests:
           - not_null
+      - name: estimated_revenue
+        description: "Monthly estimated revenue (AUD)"
+        tests:
+          - not_null
+
+  - name: dm_host_neighbourhood
+    description: "Datamart: aggregated host performance by neighbourhood"
+
+  - name: dm_listing_neighbourhood
+    description: "Datamart: listing performance by neighbourhood"
+
+  - name: dm_property_type
+    description: "Datamart: property type performance summary"

@@ -2,19 +2,73 @@ version: 2
 
 seeds:
   - name: census_g01_silver
-    description: "Processed Census G01 demographic data for NSW LGAs"
+    description: "Cleaned and standardized Census G01 demographic data"
+    columns:
+      - name: LGA_CODE_2016
+        description: "Unique LGA identifier"
+        tests:
+          - not_null
+          - unique
 
   - name: census_g02_silver
-    description: "Processed Census G02 socioeconomic data for NSW LGAs"
+    description: "Cleaned and standardized Census G02 socioeconomic data"
+    columns:
+      - name: LGA_CODE_2016
+        description: "Unique LGA identifier"
+        tests:
+          - not_null
+          - unique
 
   - name: listings_base
-    description: "Base listing data with selected key columns cleaned and standardised"
+    description: "Base table for Airbnb listings with data cleansing applied"
+    columns:
+      - name: listing_id
+        description: "Unique identifier for listing"
+        tests:
+          - not_null
+          - unique
+      - name: host_id
+        description: "Host identifier"
+        tests:
+          - not_null
+      - name: price
+        description: "Nightly price (AUD)"
+      - name: year_month
+        description: "Year-month reference for scraping period"
+        tests:
+          - not_null
 
   - name: listing_monthly
-    description: "Aggregated monthly metrics for listings (e.g. availability, pricing)"
+    description: "Aggregated monthly listings data used for analysis"
+    columns:
+      - name: listing_id
+        tests:
+          - not_null
+      - name: year_month
+        tests:
+          - not_null
+      - name: estimated_revenue
+        description: "Estimated monthly revenue"
+        tests:
+          - not_null
 
   - name: nsw_lga_code_silver
-    description: "Silver layer mapping of LGA codes to names with clean formatting"
+    description: "Cleaned NSW LGA code-to-name reference data"
+    columns:
+      - name: LGA_CODE
+        tests:
+          - not_null
+          - unique
+      - name: LGA_NAME
+        tests:
+          - not_null
 
   - name: nsw_lga_suburb_silver
-    description: "Silver layer cleaned mapping of suburb to LGA"
+    description: "Cleaned mapping of NSW suburbs to LGAs"
+    columns:
+      - name: LGA_NAME
+        tests:
+          - not_null
+      - name: SUBURB_NAME
+        tests:
+          - not_null
