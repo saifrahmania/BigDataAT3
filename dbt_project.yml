@@ -19,7 +19,7 @@ clean-targets:
 models:
   BigDataAT3:  # This must match the project name at the top
     staging:
-      +materialized: view
+      +materialized: table
       +schema: staging
     core:
       +materialized: table
@@ -27,6 +27,9 @@ models:
     marts:
       +materialized: table
       +schema: marts
+    silver:
+      +materialized: table
+      +schema: silver
 
 seeds:
   BigDataAT3:  # This must match the project name

@@ -196,3 +196,4 @@ CREATE TABLE IF NOT EXISTS bronze."census_g02_raw" (
 );
 
 CREATE INDEX IF NOT EXISTS idx_bronze_listings_src ON bronze."listings_raw"(_src_file);
+SELECT * FROM {{ ref('listings_raw') }}
