@@ -2,19 +2,51 @@ version: 2
 
 models:
   - name: part_3
-    description: "Mart model: Summary of listings per suburb per month"
+    description: "Mart model: Monthly roll-up of listings with derived revenue and availability metrics."
     columns:
-      - name: suburb
-        description: "NSW suburb name"
-      - name: total_listings
-        description: "Count of listings"
+      - name: listing_id
+        description: "Unique ID of the listing"
         tests:
           - not_null
+      - name: year_month
+        description: "YYYY-MM format string representing monthly snapshot"
+        tests:
+          - not_null
+      - name: has_availability
+        description: "Boolean indicating if listing had availability"
+      - name: price
+        description: "Latest available price for the listing in that month"
+      - name: availability_30
+        description: "Average number of available nights in the last 30 days"
+      - name: number_of_reviews
+        description: "Total number of reviews accumulated in that month"
+      - name: review_scores_rating
+        description: "Average guest rating for the listing"
+      - name: room_type
+        description: "Most recent room type (entire home, private room, etc.)"
+      - name: property_type
+        description: "Most recent property type (apartment, house, etc.)"
+      - name: accommodates
+        description: "Number of people the listing accommodates"
+      - name: listing_neighbourhood
+        description: "Original neighbourhood field from source"
+      - name: host_id
+        description: "ID of the host managing the listing"
+      - name: stays
+        description: "Estimated number of nights booked (30 - availability_30)"
+      - name: estimated_revenue
+        description: "Estimated monthly revenue from bookings"
 
   - name: part_4
-    description: "Mart model: Aggregated statistics per LGA"
+    description: "Mart model: Aggregated revenue and demographic comparison between top and bottom performing LGAs."
     columns:
-      - name: lga
-        description: "NSW Local Government Area"
+      - name: bucket
+        description: "'TOP_13' or 'BOTTOM_13' depending on revenue rank"
         tests:
           - not_null
+      - name: avg_median_age
+        description: "Average median age of residents in the LGAs"
+      - name: avg_household_size
+        description: "Average household size in the LGAs"
+      - name: avg_rev_per_active
+        description: "Average revenue per active listing for LGAs in the bucket"
