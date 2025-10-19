@@ -28,12 +28,28 @@ seeds:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
-        zipcode: text
+        accommodates: integer
         price: numeric
+        availability_30: integer
+        number_of_reviews: integer
+        review_scores_rating: numeric
+        review_scores_accuracy: numeric
+        review_scores_cleanliness: numeric
+        review_scores_checkin: numeric
+        review_scores_communication: numeric
+        review_scores_value: numeric
         minimum_nights: numeric
         maximum_nights: numeric
         latitude: numeric
         longitude: numeric
+        zipcode: text
+        host_name: text
+        property_type: text
+        room_type: text
+        host_is_superhost: text
+        has_availability: text
+        source_file: text
+        year_month: text
       listings_raw_part_2:
         listing_id: bigint
         scrape_id: bigint
