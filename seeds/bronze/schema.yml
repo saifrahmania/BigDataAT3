@@ -1,88 +1,53 @@
 version: 2
 
 seeds:
-  # ================================
-  # Airbnb Raw Listings (Bronze Seeds)
-  # ================================
-  - name: listings_raw_part_1
-    description: "Part 1 of Airbnb listings dataset"
-    columns:
-      - name: listing_id
-        data_type: bigint
-      - name: scrape_id
-        data_type: bigint
-      - name: host_id
-        data_type: bigint
-      - name: accommodates
-        data_type: integer
-      - name: price
-        data_type: numeric
-      - name: availability_30
-        data_type: integer
-      - name: number_of_reviews
-        data_type: integer
-      - name: review_scores_rating
-        data_type: numeric
-      - name: review_scores_accuracy
-        data_type: numeric
-      - name: review_scores_cleanliness
-        data_type: numeric
-      - name: review_scores_checkin
-        data_type: numeric
-      - name: review_scores_communication
-        data_type: numeric
-      - name: review_scores_value
-        data_type: numeric
-      - name: host_name
-        data_type: text
-      - name: property_type
-        data_type: text
-      - name: room_type
-        data_type: text
-      - name: host_is_superhost
-        data_type: text
-      - name: has_availability
-        data_type: text
-      - name: source_file
-        data_type: text
-      - name: year_month
-        data_type: text
+  BigDataAT3:
+    +schema: dbt_mrahman_bronze
+    +quote_columns: true
 
-  # ================================
-  # Census Seeds
-  # ================================
-  - name: census_g01_nsw_lga
-    description: "Raw Census G01 demographic data for NSW LGAs"
-    columns:
-      - name: LGA_CODE_2016
-        description: "Unique LGA identifier code for 2016 Census"
-        tests: [not_null, unique]
+    # =====================================
+    # Airbnb Raw Listings (Bronze Seeds)
+    # =====================================
+    +column_types:
+      # Apply to all 21 parts
+      '*':
+        listing_id: bigint
+        scrape_id: bigint
+        host_id: bigint
+        accommodates: integer
+        price: numeric
+        availability_30: integer
+        number_of_reviews: integer
+        review_scores_rating: numeric
+        review_scores_accuracy: numeric
+        review_scores_cleanliness: numeric
+        review_scores_checkin: numeric
+        review_scores_communication: numeric
+        review_scores_value: numeric
+        host_name: text
+        property_type: text
+        room_type: text
+        host_is_superhost: text
+        has_availability: text
+        source_file: text
+        year_month: text
 
-  - name: census_g02_nsw_lga
-    description: "Raw Census G02 socioeconomic data for NSW LGAs"
-    columns:
-      - name: LGA_CODE_2016
-        description: "Unique LGA identifier code for 2016 Census"
-        tests: [not_null, unique]
+    # =====================================
+    # Census Seeds
+    # =====================================
+    census_g01_nsw_lga:
+      +schema: dbt_mrahman_bronze
+      description: "Raw Census G01 demographic data for NSW LGAs"
+    census_g02_nsw_lga:
+      +schema: dbt_mrahman_bronze
+      description: "Raw Census G02 socioeconomic data for NSW LGAs"
 
-  # ================================
-  # LGA Mapping Seeds
-  # ================================
-  - name: nsw_lga_code
-    description: "Mapping between NSW LGA codes and names"
-    columns:
-      - name: LGA_CODE
-        description: "Unique LGA code"
-        tests: [not_null, unique]
-      - name: LGA_NAME
-        description: "Readable LGA name"
-
-  - name: nsw_lga_suburb
-    description: "Mapping between NSW suburbs and their corresponding LGAs"
-    columns:
-      - name: LGA_NAME
-        description: "Name of the LGA"
-        tests: [not_null]
-      - name: SUBURB_NAME
-        description: "Name of the suburb"
-        tests: [not_null]
+    # =====================================
+    # LGA Mapping Seeds
+    # =====================================
+    nsw_lga_code:
+      +schema: dbt_mrahman_bronze
+      description: "Mapping between NSW LGA codes and names"
+    nsw_lga_suburb:
+      +schema: dbt_mrahman_bronze
+      description: "Mapping between NSW suburbs and their corresponding LGAs"

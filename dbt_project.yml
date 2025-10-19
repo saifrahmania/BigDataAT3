@@ -17,227 +17,53 @@ clean-targets:
   - "dbt_packages"
 
 seeds:
-  BigDataAT3:  # 👈 Must match your dbt project name exactly
+  BigDataAT3:
+    +schema: dbt_mrahman_bronze
+    +quote_columns: true
 
-    # ============================================
-    # Bronze Layer (raw Airbnb + Census)
-    # ============================================
-    +schema: bronze
+    # =====================================
+    # Airbnb Raw Listings (Bronze Seeds)
+    # =====================================
     +column_types:
-      listings_raw_part_1:
-        column_types:
-        id: bigint
-        host_id: bigint
-        price: numeric
-      listings_raw_part_2:
+      # Apply to all 21 parts
+      '*':
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
-        zipcode: text
+        accommodates: integer
         price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_3:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_4:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_5:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_6:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_7:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_8:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_9:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_10:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_11:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_12:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_13:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_14:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_15:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_16:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_17:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_18:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_19:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_20:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
-      listings_raw_part_21:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-        zipcode: text
-        price: numeric
-        minimum_nights: numeric
-        maximum_nights: numeric
-        latitude: numeric
-        longitude: numeric
+        availability_30: integer
+        number_of_reviews: integer
+        review_scores_rating: numeric
+        review_scores_accuracy: numeric
+        review_scores_cleanliness: numeric
+        review_scores_checkin: numeric
+        review_scores_communication: numeric
+        review_scores_value: numeric
+        host_name: text
+        property_type: text
+        room_type: text
+        host_is_superhost: text
+        has_availability: text
+        source_file: text
+        year_month: text
 
-    # ============================================
-    # Silver Layer
-    # ============================================
-    silver_prototype:
-      +schema: silver
+    # =====================================
+    # Census Seeds
+    # =====================================
+    census_g01_nsw_lga:
+      +schema: dbt_mrahman_bronze
+      description: "Raw Census G01 demographic data for NSW LGAs"
+    census_g02_nsw_lga:
+      +schema: dbt_mrahman_bronze
+      description: "Raw Census G02 socioeconomic data for NSW LGAs"
 
-    # ============================================
-    # Gold Layer
-    # ============================================
-    gold_prototype:
-      +schema: gold
+    # =====================================
+    # LGA Mapping Seeds
+    # =====================================
+    nsw_lga_code:
+      +schema: dbt_mrahman_bronze
+      description: "Mapping between NSW LGA codes and names"
+    nsw_lga_suburb:
+      +schema: dbt_mrahman_bronze
+      description: "Mapping between NSW suburbs and their corresponding LGAs"
