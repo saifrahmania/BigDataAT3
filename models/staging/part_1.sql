@@ -27,7 +27,11 @@ WITH listings_raw AS (
         review_scores_value AS review_scores_value,
         source_file AS source_file,
         year_month AS year_month
+<<<<<<< HEAD
     -- 👇 THIS LINE IS THE FIX
+=======
+    
+>>>>>>> 4e3dd796041416bbe9d2423443c8b7488b841388
     FROM {{ ref('listings_raw_union') }}
 )
 
