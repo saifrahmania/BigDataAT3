@@ -27,7 +27,7 @@ WITH listings_raw AS (
         review_scores_value AS review_scores_value,
         source_file AS source_file,
         year_month AS year_month
-    
+
     FROM {{ ref('listings_raw_union') }}
 )
 

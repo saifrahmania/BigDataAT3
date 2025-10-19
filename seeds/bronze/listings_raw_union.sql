@@ -1,0 +1,44 @@
+-- listings_raw_union.sql
+-- This model unifies all 21 split seed files into one logical dataset.
+
+SELECT * FROM {{ ref('listings_raw_part_1') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_2') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_3') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_4') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_5') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_6') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_7') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_8') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_9') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_10') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_11') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_12') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_13') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_14') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_15') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_16') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_17') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_18') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_19') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_20') }}
+UNION ALL
+SELECT * FROM {{ ref('listings_raw_part_21') }}
