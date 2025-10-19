@@ -29,106 +29,211 @@ seeds:
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_2:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_3:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_4:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_5:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_6:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_7:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_8:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_9:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_10:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_11:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_12:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_13:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_14:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_15:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_16:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_17:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_18:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_19:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_20:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
       listings_raw_part_21:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
         zipcode: text
+        price: numeric
+        minimum_nights: numeric
+        maximum_nights: numeric
+        latitude: numeric
+        longitude: numeric
 
     # ============================================
     # Silver Layer
