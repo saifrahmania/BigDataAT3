@@ -17,15 +17,14 @@ clean-targets:
   - "dbt_packages"
 
 seeds:
+  +schema: dbt_mrahman_bronze  # ✅ Apply schema globally to all seeds
   BigDataAT3:
-    +schema: dbt_mrahman_bronze
     +quote_columns: true
 
     # =====================================
     # Airbnb Raw Listings (Bronze Seeds)
     # =====================================
     +column_types:
-      # Apply to all 21 parts
       '*':
         listing_id: bigint
         scrape_id: bigint
@@ -52,18 +51,14 @@ seeds:
     # Census Seeds
     # =====================================
     census_g01_nsw_lga:
-      +schema: dbt_mrahman_bronze
       description: "Raw Census G01 demographic data for NSW LGAs"
     census_g02_nsw_lga:
-      +schema: dbt_mrahman_bronze
       description: "Raw Census G02 socioeconomic data for NSW LGAs"
 
     # =====================================
     # LGA Mapping Seeds
     # =====================================
     nsw_lga_code:
-      +schema: dbt_mrahman_bronze
       description: "Mapping between NSW LGA codes and names"
     nsw_lga_suburb:
-      +schema: dbt_mrahman_bronze
       description: "Mapping between NSW suburbs and their corresponding LGAs"
