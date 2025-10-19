@@ -17,11 +17,10 @@ clean-targets:
   - "dbt_packages"
 
 seeds:
-  +schema: dbt_mrahman_bronze
+  +schema: bronze          # ✅ <-- relative schema name only
   +quote_columns: true
 
   BigDataAT3:
-    # ✅ All 21 Airbnb parts share same structure
     +column_types:
       listings_raw_part_1:
         listing_id: bigint
