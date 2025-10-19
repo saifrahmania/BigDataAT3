@@ -1,6 +1,9 @@
 version: 2
 
 seeds:
+  # ================================
+  # Census Seeds
+  # ================================
   - name: census_g01_nsw_lga
     description: "Raw Census G01 demographic data for NSW LGAs"
     columns:
@@ -22,131 +25,74 @@ seeds:
   # ================================
   # Airbnb Raw Listings (Bronze Seeds)
   # ================================
+  column_types:
+    listing_id: bigint
+    scrape_id: bigint
+    host_id: bigint
+    zipcode: text
+
   - name: listings_raw_part_1
     description: "First partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_2
     description: "Second partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_3
     description: "Third partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_4
     description: "Fourth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_5
     description: "Fifth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_6
     description: "Sixth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_7
     description: "Seventh partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_8
     description: "Eighth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_9
     description: "Ninth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_10
     description: "Tenth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_11
     description: "Eleventh partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_12
     description: "Twelfth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_13
     description: "Thirteenth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_14
     description: "Fourteenth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_15
     description: "Fifteenth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_16
     description: "Sixteenth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_17
     description: "Seventeenth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_18
     description: "Eighteenth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_19
     description: "Nineteenth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_20
     description: "Twentieth partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   - name: listings_raw_part_21
     description: "Twenty-first partition of Airbnb raw listings data"
-    column_types:
-      listing_id: bigint
-      scrape_id: bigint
 
   # ================================
   # LGA Mapping Seeds
