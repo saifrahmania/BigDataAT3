@@ -1,4 +1,6 @@
--- Combine all split CSVs into one unified logical table
+-- listings_raw_union.sql
+-- This model unifies all 21 split seed files into one logical dataset.
+
 SELECT * FROM {{ ref('listings_raw_part_1') }}
 UNION ALL
 SELECT * FROM {{ ref('listings_raw_part_2') }}
