@@ -1,3 +1,4 @@
+listing_id,scrape_id,scraped_date,host_id,host_name,host_since,host_is_superhost,host_neighbourhood,listing_neighbourhood,property_type,room_type,accommodates,price,has_availability,availability_30,number_of_reviews,review_scores_rating,review_scores_accuracy,review_scores_cleanliness,review_scores_checkin,review_scores_communication,review_scores_value,source_file,year_month
 31129492,20201200000000,2020-12-16,43570279,Nathan,7/9/2015,f,Kingsford,Randwick,Private room in house,Private room,2,80.0,t,29,3,80.0,9.0,8.0,7.0,9.0,7.0,12_2020.csv,2020-12
 31130045,20201200000000,2020-12-16,230750104,Hoang,15/12/2018,f,,Canterbury-Bankstown,Private room in apartment,Private room,2,45.0,t,22,32,94.0,10.0,10.0,10.0,9.0,9.0,12_2020.csv,2020-12
 31130048,20201200000000,2020-12-15,86840144,Nathan,30/7/2016,f,Kingsford,Randwick,Private room in house,Private room,2,100.0,t,0,0,,,,,,,12_2020.csv,2020-12

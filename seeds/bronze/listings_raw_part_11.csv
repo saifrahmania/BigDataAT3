@@ -1,3 +1,4 @@
+listing_id,scrape_id,scraped_date,host_id,host_name,host_since,host_is_superhost,host_neighbourhood,listing_neighbourhood,property_type,room_type,accommodates,price,has_availability,availability_30,number_of_reviews,review_scores_rating,review_scores_accuracy,review_scores_cleanliness,review_scores_checkin,review_scores_communication,review_scores_value,source_file,year_month
 37660382,20200000000000,2020-06-11,124972809,Xiaofu,9/4/2017,f,Chatswood,Willoughby,Apartment,Shared room,1,200.0,t,0,0,,,,,,,06_2020.csv,2020-06
 37660804,20200000000000,2020-06-11,2505759,Dean,30/5/2012,t,North Sydney,North Sydney,Cottage,Entire home/apt,4,84.0,t,0,10,100.0,10.0,9.0,10.0,10.0,10.0,06_2020.csv,2020-06
 37661446,20200000000000,2020-06-12,124972809,Xiaofu,9/4/2017,f,Chatswood,Willoughby,Apartment,Shared room,1,59.0,t,21,0,,,,,,,06_2020.csv,2020-06

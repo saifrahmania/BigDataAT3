@@ -1,3 +1,4 @@
+listing_id,scrape_id,scraped_date,host_id,host_name,host_since,host_is_superhost,host_neighbourhood,listing_neighbourhood,property_type,room_type,accommodates,price,has_availability,availability_30,number_of_reviews,review_scores_rating,review_scores_accuracy,review_scores_cleanliness,review_scores_checkin,review_scores_communication,review_scores_value,source_file,year_month
 24070623,20200000000000,2020-08-21,10903295,Paul,30/12/2013,f,Randwick,Randwick,Entire apartment,Entire home/apt,2,300.0,t,30,0,,,,,,,08_2020.csv,2020-08
 24071350,20200000000000,2020-08-22,163277099,Kylee,19/12/2017,t,Cronulla,Sutherland Shire,Entire apartment,Entire home/apt,2,120.0,t,0,91,97.0,10.0,10.0,10.0,10.0,9.0,08_2020.csv,2020-08
 24071989,20200000000000,2020-08-22,66400722,Hung,9/4/2016,f,Kingsgrove,Canterbury-Bankstown,Private room in house,Private room,1,22.0,t,12,66,91.0,9.0,9.0,10.0,10.0,9.0,08_2020.csv,2020-08

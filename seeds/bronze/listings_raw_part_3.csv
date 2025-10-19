@@ -1,3 +1,4 @@
+listing_id,scrape_id,scraped_date,host_id,host_name,host_since,host_is_superhost,host_neighbourhood,listing_neighbourhood,property_type,room_type,accommodates,price,has_availability,availability_30,number_of_reviews,review_scores_rating,review_scores_accuracy,review_scores_cleanliness,review_scores_checkin,review_scores_communication,review_scores_value,source_file,year_month
 11046333,20200000000000,2021-02-10,57325113,Robert,3/2/2016,f,,Blacktown,Private room in house,Private room,2,70.0,t,30,5,76.0,7.0,6.0,9.0,9.0,8.0,02_2021.csv,2021-02
 11047176,20200000000000,2021-02-10,54111496,Biba,10/1/2016,f,Bondi Beach,Waverley,Entire apartment,Entire home/apt,2,150.0,t,0,5,88.0,8.0,6.0,9.0,10.0,8.0,02_2021.csv,2021-02
 11047921,20200000000000,2021-02-10,7409213,L'Abode Accommodation Specialist,10/7/2013,f,Double Bay,Mosman,Entire apartment,Entire home/apt,4,179.0,t,21,44,86.0,9.0,9.0,9.0,9.0,9.0,02_2021.csv,2021-02
