@@ -16,6 +16,9 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+# ========================================
+# SEEDS (Raw CSV data → Bronze schema)
+# ========================================
 seeds:
   +schema: bronze
   +quote_columns: true
@@ -24,6 +27,7 @@ seeds:
     listing_id: bigint
     scrape_id: bigint
     host_id: bigint
+
   BigDataAT3:
     census_g01_nsw_lga:
       description: "Raw Census G01 demographic data for NSW LGAs"
@@ -34,8 +38,14 @@ seeds:
     nsw_lga_suburb:
       description: "Mapping between NSW suburbs and their corresponding LGAs"
 
+# ========================================
+# MODELS (Bronze → Silver → Gold)
+# ========================================
 models:
   BigDataAT3:
+    bronze:
+      +schema: bronze
+      +materialized: view
     silver:
       +schema: silver
       +materialized: view
