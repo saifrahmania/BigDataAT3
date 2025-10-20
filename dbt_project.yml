@@ -19,105 +19,20 @@ clean-targets:
 seeds:
   +schema: bronze
   +quote_columns: true
+  +encoding: utf-8-sig          # Handles CSVs saved with BOM
+
+  # Apply these types globally to all seeds that contain these columns
+  +column_types:
+    listing_id: bigint
+    scrape_id: bigint
+    host_id: bigint
+    zipcode: text                # optional but recommended (leading zeros)
 
   BigDataAT3:
-    +column_types:
-      listings_raw_part_1:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_2:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_3:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_4:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_5:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_6:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_7:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_8:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_9:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_10:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_11:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_12:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_13:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_14:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_15:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_16:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_17:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_18:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_19:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_20:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-      listings_raw_part_21:
-        listing_id: bigint
-        scrape_id: bigint
-        host_id: bigint
-
-    # =====================================
-    # Census Seeds
-    # =====================================
     census_g01_nsw_lga:
       description: "Raw Census G01 demographic data for NSW LGAs"
     census_g02_nsw_lga:
       description: "Raw Census G02 socioeconomic data for NSW LGAs"
-
-    # =====================================
-    # LGA Mapping Seeds
-    # =====================================
     nsw_lga_code:
       description: "Mapping between NSW LGA codes and names"
     nsw_lga_suburb:
