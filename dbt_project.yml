@@ -17,7 +17,7 @@ clean-targets:
   - "dbt_packages"
 
 seeds:
-  +schema: bronze          # ✅ <-- relative schema name only
+  +schema: bronze
   +quote_columns: true
 
   BigDataAT3:
@@ -106,6 +106,7 @@ seeds:
         listing_id: bigint
         scrape_id: bigint
         host_id: bigint
+      # ... repeat until listings_raw_part_21 ...
 
     # =====================================
     # Census Seeds
