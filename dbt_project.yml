@@ -19,15 +19,11 @@ clean-targets:
 seeds:
   +schema: bronze
   +quote_columns: true
-  +encoding: utf-8-sig          # Handles CSVs saved with BOM
-
-  # Apply these types globally to all seeds that contain these columns
+  +encoding: utf-8-sig
   +column_types:
     listing_id: bigint
     scrape_id: bigint
     host_id: bigint
-    zipcode: text                # optional but recommended (leading zeros)
-
   BigDataAT3:
     census_g01_nsw_lga:
       description: "Raw Census G01 demographic data for NSW LGAs"
@@ -37,3 +33,12 @@ seeds:
       description: "Mapping between NSW LGA codes and names"
     nsw_lga_suburb:
       description: "Mapping between NSW suburbs and their corresponding LGAs"
+
+models:
+  BigDataAT3:
+    silver:
+      +schema: silver
+      +materialized: view
+    gold:
+      +schema: gold
+      +materialized: table
