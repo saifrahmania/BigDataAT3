@@ -1,7 +1,8 @@
 -- Silver layer: further normalization and enrichment
 
 WITH cleaned AS (
-    SELECT * FROM {{ ref('part_2') }}
+    SELECT * 
+    FROM {{ ref('listings_raw_union') }}   -- ✅ this pulls from your bronze union model
 ),
 
 standardized AS (
@@ -9,7 +10,7 @@ standardized AS (
         listing_id,
         host_id,
         LOWER(TRIM(host_name)) AS host_name,
-        is_superhost,
+        host_is_superhost AS is_superhost,
         LOWER(TRIM(host_neighbourhood)) AS host_neighbourhood,
         LOWER(TRIM(listing_neighbourhood)) AS suburb_name,
         LOWER(TRIM(property_type)) AS property_type,
