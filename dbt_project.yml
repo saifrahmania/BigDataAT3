@@ -1,54 +1,45 @@
 name: 'BigDataAT3'
 version: '1.0.0'
 config-version: 2
-
-profile: 'default'
+profile: 'default'   # your dbt Cloud connection profile
 
 model-paths: ["models"]
-analysis-paths: ["analyses"]
-test-paths: ["tests"]
-seed-paths: ["seeds"]
-macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
-
+test-paths: ["tests"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+analysis-paths: ["analyses"]
 target-path: "target"
-clean-targets:
-  - "target"
-  - "dbt_packages"
+clean-targets: ["target", "dbt_packages"]
 
-# ========================================
-# SEEDS (Raw CSV data → Bronze schema)
-# ========================================
-seeds:
-  +schema: bronze
-  +quote_columns: true
-  +encoding: utf-8-sig
-  +column_types:
-    listing_id: bigint
-    scrape_id: bigint
-    host_id: bigint
+# Declare the month files you actually have (used to build the UNION)
+vars:
+  airbnb_months:
+    - '05_2020'
+    - '06_2020'
+    - '07_2020'
+    - '08_2020'
+    - '09_2020'
+    - '10_2020'
+    - '11_2020'
+    - '12_2020'
+    - '01_2021'
+    - '02_2021'
+    - '03_2021'
+    - '04_2021'
 
-  BigDataAT3:
-    census_g01_nsw_lga:
-      description: "Raw Census G01 demographic data for NSW LGAs"
-    census_g02_nsw_lga:
-      description: "Raw Census G02 socioeconomic data for NSW LGAs"
-    nsw_lga_code:
-      description: "Mapping between NSW LGA codes and names"
-    nsw_lga_suburb:
-      description: "Mapping between NSW suburbs and their corresponding LGAs"
-
-# ========================================
-# MODELS (Bronze → Silver → Gold)
-# ========================================
 models:
   BigDataAT3:
-    bronze:
-      +schema: "{{ target.schema }}_bronze"
-      +materialized: view
+    +materialized: view
     silver:
-      +schema: "{{ target.schema }}_silver"
-      +materialized: view
+      +schema: silver
     gold:
-      +schema: "{{ target.schema }}_gold"
-      +materialized: table
+      +schema: gold
+      # materialize facts as table, dims/views as needed
+      fact_listing_monthly:
+        +materialized: table
+
+snapshots:
+  +target_schema: snapshots
+
+# You don't need seeds since you load via Airflow → Bronze.

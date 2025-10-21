@@ -1,0 +1,12 @@
+version: 2
+models:
+  - name: fact_listing_monthly
+    tests: []
+    columns:
+      - name: listing_id
+        tests: [not_null]
+      - name: year_month
+        tests: [not_null]
+  - name: dm_listing_neighbourhood
+  - name: dm_property_type
+  - name: dm_host_neighbourhood
