@@ -39,6 +39,7 @@ sources:
     tables:
       - name: nsw_lga_code
         description: Local Government Area codes and names.
+        
       - name: nsw_lga_suburb
         description: Mapping between suburbs and LGAs.
       - name: 2016Census_G01_NSW_LGA
