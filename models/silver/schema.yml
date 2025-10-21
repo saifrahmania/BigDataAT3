@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: listings_base
+    columns:
+      - name: listing_id
+        tests: [not_null]
+      - name: host_id
+        tests: [not_null]
+      - name: year_month
+        tests: [not_null]
