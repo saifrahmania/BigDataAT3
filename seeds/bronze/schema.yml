@@ -1,9 +1,6 @@
 version: 2
 
 seeds:
-  # ================================
-  # Airbnb Raw Listings (Bronze Seeds)
-  # ================================
   - name: listings_raw_part_1
     description: "Part 1 of Airbnb listings dataset"
     columns:
@@ -48,9 +45,6 @@ seeds:
       - name: year_month
         data_type: text
 
-  # ================================
-  # Census Seeds
-  # ================================
   - name: census_g01_nsw_lga
     description: "Raw Census G01 demographic data for NSW LGAs"
     columns:
@@ -65,9 +59,6 @@ seeds:
         description: "Unique LGA identifier code for 2016 Census"
         tests: [not_null, unique]
 
-  # ================================
-  # LGA Mapping Seeds
-  # ================================
   - name: nsw_lga_code
     description: "Mapping between NSW LGA codes and names"
     columns:
