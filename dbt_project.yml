@@ -44,11 +44,11 @@ seeds:
 models:
   BigDataAT3:
     bronze:
-      +schema: bronze
+      +schema: "{{ target.schema }}_bronze"
       +materialized: view
     silver:
-      +schema: silver
+      +schema: "{{ target.schema }}_silver"
       +materialized: view
     gold:
-      +schema: gold
+      +schema: "{{ target.schema }}_gold"
       +materialized: table
