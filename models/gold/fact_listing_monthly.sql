@@ -12,6 +12,6 @@ with f as (
     number_of_stays,
     estimated_revenue,
     year_month
-  from {{ ref('listing_monthly') }}
+  from {{ ref('listings_monthly') }}
 )
 select * from f
