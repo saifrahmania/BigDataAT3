@@ -37,9 +37,9 @@ sources:
       NSW Census 2016 datasets used for enriching Airbnb listings with socio-demographic data.
     schema: bronze
     tables:
-      - name: NSW_LGA_CODE
+      - name: nsw_lga_code
         description: Local Government Area codes and names.
-      - name: NSW_LGA_SUBURB
+      - name: nsw_lga_suburb
         description: Mapping between suburbs and LGAs.
       - name: 2016Census_G01_NSW_LGA
         description: Census demographic data (G01 dataset).
