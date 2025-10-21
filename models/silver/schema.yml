@@ -1,10 +1,56 @@
 version: 2
+
 models:
   - name: listings_base
+    description: >
+      Unified Airbnb listings data for NSW from May 2020 to April 2021,
+      cleaned and standardized from the Bronze monthly CSV files.
     columns:
       - name: listing_id
-        tests: [not_null]
+        description: Unique identifier for each Airbnb listing.
+        tests:
+          - not_null
       - name: host_id
-        tests: [not_null]
+        description: Unique identifier for each host.
+        tests:
+          - not_null
+      - name: listing_neighbourhood
+        description: Normalized neighbourhood name of the listing.
+      - name: property_type
+        description: Property category such as House, Apartment, or Studio.
+      - name: room_type
+        description: Type of room offered (Entire home, Private room, etc.)
+      - name: accommodates
+        description: Number of guests the property can accommodate.
+      - name: price
+        description: Price per night in AUD.
+      - name: availability_30
+        description: Number of days available for booking in the next 30 days.
+      - name: is_active
+        description: Flag indicating if listing is active (availability < 30 days).
+      - name: number_of_stays
+        description: Count of completed bookings (proxy from reviews).
+      - name: estimated_revenue
+        description: Estimated monthly revenue computed from price and occupancy.
+      - name: total_host_listings
+        description: Total number of listings associated with the host.
+
+  - name: listings_monthly
+    description: >
+      Monthly-level aggregated Airbnb listings dataset derived from listings_base.
+      Used for time-based analyses and fact tables in the Gold layer.
+    columns:
+      - name: listing_id
+        description: Unique listing identifier.
+        tests:
+          - not_null
+      - name: host_id
+        description: Host identifier.
       - name: year_month
-        tests: [not_null]
+        description: Year-month period of the listing snapshot (YYYY-MM).
+        tests:
+          - not_null
+      - name: price
+        description: Price per night.
+      - name: estimated_revenue
+        description: Computed revenue per listing for that month.
