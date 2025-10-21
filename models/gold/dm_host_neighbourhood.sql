@@ -4,7 +4,7 @@ lga_map as (
   select
     lower(suburb_name) as suburb_name,
     lower(lga_name) as lga_name
-  from {{ source('bronze','nsw_lga_suburb') }}
+  from {{ source('bronze','NSW_LGA_SUBURB') }}
 ),
 f as (
   select
