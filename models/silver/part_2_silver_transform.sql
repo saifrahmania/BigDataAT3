@@ -3,6 +3,7 @@
     schema='dbt_mrahman_silver'
 ) }}
 
+-- Combine Airbnb listings with LGA and Census data
 with airbnb_clean as (
     select
         listing_id,
@@ -14,14 +15,14 @@ with airbnb_clean as (
         accommodates,
         price::numeric as price,
         number_of_reviews::int,
-        listing_neighbourhood as suburb,
+        coalesce(lower(listing_neighbourhood), lower(host_neighbourhood)) as neighbourhood,
         year_month
     from {{ ref('listings_base') }}
     where price is not null
 ),
 lga_map as (
     select
-        suburb,
+        lower(suburb) as suburb,
         lga_name,
         lga_code
     from bronze.nsw_lga_suburb
@@ -51,7 +52,7 @@ select
     a.accommodates,
     a.price,
     a.number_of_reviews,
-    a.suburb,
+    a.neighbourhood,
     a.year_month,
     l.lga_name,
     l.lga_code,
@@ -61,6 +62,9 @@ select
     c2.avg_household_size,
     c2.median_tot_prsnl_inc_weekly
 from airbnb_clean a
-left join lga_map l on a.suburb = l.suburb
-left join census_g01 c1 on l.lga_code = c1.lga_code
-left join census_g02 c2 on l.lga_code = c2.lga_code
+left join lga_map l 
+    on lower(a.neighbourhood) = lower(l.suburb)
+left join census_g01 c1 
+    on l.lga_code = c1.lga_code
+left join census_g02 c2 
+    on l.lga_code = c2.lga_code;
