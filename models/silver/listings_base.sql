@@ -13,10 +13,10 @@ with base as (
 
     {% for t in months %}
     select
-        cast("LISTING_ID" as bigint)                            as listing_id,
-        cast("HOST_ID" as bigint)                               as host_id,
-        nullif(trim("HOST_NAME"),'')                            as host_name,
-        nullif(trim("HOST_SINCE"),'')                           as host_since_raw,
+        nullif("LISTING_ID", '')::bigint                      as listing_id,
+        nullif("HOST_ID", '')::bigint                         as host_id,
+        nullif(trim("HOST_NAME"),'')                          as host_name,
+        nullif(trim("HOST_SINCE"),'')                         as host_since_raw,
 
         -- Try to coerce day/month/year and year-month-day patterns
         coalesce(
