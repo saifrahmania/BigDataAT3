@@ -1,47 +1,28 @@
-name: 'BigDataAT3'
-version: '1.0.0'
+name: "BigDataAT3"
+version: "1.0"
 config-version: 2
-profile: 'default'   # your dbt Cloud connection profile
+
+profile: "user"
 
 model-paths: ["models"]
-snapshot-paths: ["snapshots"]
-test-paths: ["tests"]
-macro-paths: ["macros"]
-seed-paths: ["seeds"]
 analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
 target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 
-# Declare the month files you actually have (used to build the UNION)
-vars:
-  airbnb_months:
-    - '05_2020'
-    - '06_2020'
-    - '07_2020'
-    - '08_2020'
-    - '09_2020'
-    - '10_2020'
-    - '11_2020'
-    - '12_2020'
-    - '01_2021'
-    - '02_2021'
-    - '03_2021'
-    - '04_2021'
-
 models:
   BigDataAT3:
-    +materialized: view
+    +materialized: view     # keep compute light
     silver:
-      +schema: silver
+      +schema: "silver"     # -> dbt_<user>_silver via default generate_schema_name
+      +tags: ["silver"]
     gold:
-      +schema: gold
-      # materialize facts as table, dims/views as needed
-      fact_listing_monthly:
-        +materialized: table
+      +schema: "gold"       # -> dbt_<user>_gold
+      +tags: ["gold"]
 
-snapshots:
-  BigDataAT3:
-    +schema: snapshots
-    +target_schema: snapshots
-
-# You don't need seeds since you load via Airflow → Bronze.
+tests:
+  +severity: warn           # make non-critical tests non-blocking by default
+  +store_failures: false

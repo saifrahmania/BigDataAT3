@@ -2,55 +2,44 @@ version: 2
 
 models:
   - name: listings_base
-    description: >
-      Unified Airbnb listings data for NSW from May 2020 to April 2021,
-      cleaned and standardized from the Bronze monthly CSV files.
+    description: "Standardized raw listings from Bronze (one row per listing snapshot)."
+    tags: ["silver"]
     columns:
       - name: listing_id
-        description: Unique identifier for each Airbnb listing.
+        description: "Unique listing identifier."
         tests:
           - not_null
       - name: host_id
-        description: Unique identifier for each host.
+        description: "Host identifier."
         tests:
           - not_null
-      - name: listing_neighbourhood
-        description: Normalized neighbourhood name of the listing.
-      - name: property_type
-        description: Property category such as House, Apartment, or Studio.
       - name: room_type
-        description: Type of room offered (Entire home, Private room, etc.)
-      - name: accommodates
-        description: Number of guests the property can accommodate.
+        description: "Room type label."
       - name: price
-        description: Price per night in AUD.
+        description: "Nightly price (numeric)."
       - name: availability_30
-        description: Number of days available for booking in the next 30 days.
-      - name: is_active
-        description: Flag indicating if listing is active (availability < 30 days).
-      - name: number_of_stays
-        description: Count of completed bookings (proxy from reviews).
-      - name: estimated_revenue
-        description: Estimated monthly revenue computed from price and occupancy.
-      - name: total_host_listings
-        description: Total number of listings associated with the host.
+        description: "Days available in next 30 days."
+      - name: year_month
+        description: "YYYY-MM of the snapshot (e.g., 2020-05)."
+        tests:
+          - not_null
 
   - name: listings_monthly
-    description: >
-      Monthly-level aggregated Airbnb listings dataset derived from listings_base.
-      Used for time-based analyses and fact tables in the Gold layer.
+    description: "Monthly grain view of listings with simple metrics (one row per listing per month)."
+    tags: ["silver"]
     columns:
       - name: listing_id
-        description: Unique listing identifier.
         tests:
           - not_null
       - name: host_id
-        description: Host identifier.
-      - name: year_month
-        description: Year-month period of the listing snapshot (YYYY-MM).
         tests:
           - not_null
-      - name: price
-        description: Price per night.
+      - name: year_month
+        tests:
+          - not_null
+      - name: is_active
+        description: "Whether listing is considered active in that month."
+      - name: number_of_stays
+        description: "Estimated stays in the month (derived)."
       - name: estimated_revenue
-        description: Computed revenue per listing for that month.
+        description: "Estimated revenue in the month (derived)."

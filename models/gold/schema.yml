@@ -1,12 +1,73 @@
 version: 2
+
 models:
-  - name: fact_listing_monthly
-    tests: []
+  - name: dim_property
+    description: "Property attributes dimension."
+    tags: ["gold", "dim"]
     columns:
       - name: listing_id
-        tests: [not_null]
-      - name: year_month
-        tests: [not_null]
-  - name: dm_listing_neighbourhood
+        tests:
+          - not_null
+          - unique
+      - name: property_type
+      - name: room_type
+      - name: accommodates
+
+  - name: dim_host
+    description: "Host attributes dimension."
+    tags: ["gold", "dim"]
+    columns:
+      - name: host_id
+        tests:
+          - not_null
+          - unique
+      - name: host_neighbourhood
+
   - name: dm_property_type
+    description: "Monthly counts by property_type."
+    tags: ["gold", "dm"]
+    columns:
+      - name: property_type
+        tests:
+          - not_null
+      - name: year_month
+        tests:
+          - not_null
+
+  - name: dm_listing_neighbourhood
+    description: "Monthly counts by listing_neighbourhood."
+    tags: ["gold", "dm"]
+    columns:
+      - name: listing_neighbourhood
+        tests:
+          - not_null
+      - name: year_month
+        tests:
+          - not_null
+
   - name: dm_host_neighbourhood
+    description: "Monthly host metrics aggregated at suburb/LGA level."
+    tags: ["gold", "dm"]
+    columns:
+      - name: host_neighbourhood_lga
+        tests:
+          - not_null
+      - name: year_month
+        tests:
+          - not_null
+      - name: distinct_hosts
+
+  - name: fact_listing_monthly
+    description: "Monthly fact table at listing grain."
+    tags: ["gold", "fact"]
+    columns:
+      - name: listing_id
+        tests:
+          - not_null
+      - name: host_id
+        tests:
+          - not_null
+      - name: year_month
+        tests:
+          - not_null
+      - name: estimated_revenue
