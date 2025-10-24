@@ -6,9 +6,9 @@
 with base as (
 
     {% set months = [
-        '05_2020','06_2020','07_2020','08_2020',
-        '09_2020','10_2020','11_2020','12_2020',
-        '01_2021','02_2021','03_2021','04_2021'
+        'm05_2020','m06_2020','m07_2020','m08_2020',
+        'm09_2020','m10_2020','m11_2020','m12_2020',
+        'm01_2021','m02_2021','m03_2021','m04_2021'
     ] %}
 
     {% for t in months %}
@@ -46,7 +46,7 @@ with base as (
 
         -- Month identifier
         '{{ t }}'                                               as month_label,
-        to_date('{{ t }}','MM_YYYY')                            as year_month
+        to_date(replace('{{ t }}','m',''),'MM_YYYY')            as year_month
 
     from {{ source('bronze', t) }}
 
