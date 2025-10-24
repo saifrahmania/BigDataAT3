@@ -13,8 +13,15 @@ with base as (
 
     {% for t in months %}
     select
-        nullif("LISTING_ID", '')::bigint                      as listing_id,
-        nullif("HOST_ID", '')::bigint                         as host_id,
+        CASE
+            WHEN trim("LISTING_ID") ~ '^[0-9]+$' THEN "LISTING_ID"::bigint
+            ELSE NULL
+        END AS listing_id,
+
+        CASE
+            WHEN trim("HOST_ID") ~ '^[0-9]+$' THEN "HOST_ID"::bigint
+            ELSE NULL
+        END AS host_id,
         nullif(trim("HOST_NAME"),'')                          as host_name,
         nullif(trim("HOST_SINCE"),'')                         as host_since_raw,
 
