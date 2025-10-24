@@ -13,8 +13,8 @@ with base as (
 
     {% for t in months %}
     select
-        cast("LISTING_ID" as bigint) as listing_id,
-        cast("HOST_ID" as bigint) as host_id,
+        "LISTING_ID"::bigint as listing_id,
+        "HOST_ID"::bigint as host_id,
         nullif(trim(cast("HOST_NAME" as text)), '') as host_name,
         nullif(trim(cast("HOST_SINCE" as text)), '') as host_since_raw,
 
@@ -32,29 +32,22 @@ with base as (
         lower(nullif(trim(cast("LISTING_NEIGHBOURHOOD" as text)), '')) as listing_neighbourhood,
         nullif(trim(cast("PROPERTY_TYPE" as text)), '') as property_type,
         nullif(trim(cast("ROOM_TYPE" as text)), '') as room_type,
-        cast("ACCOMMODATES" as int) as accommodates,
+        "ACCOMMODATES"::int as accommodates,
 
-        -- ✅ FIX: always cast to text first before cleaning or comparing
-        case
-            when trim(cast("PRICE" as text)) ~ '^[0-9,.]+$'
-            then cast(replace(trim(cast("PRICE" as text)), ',', '') as numeric)
-            else null
-        end as price,
+        -- ✅ PRICE is already bigint, just cast safely to numeric
+        "PRICE"::numeric as price,
 
         case
             when lower(coalesce(trim(cast("HAS_AVAILABILITY" as text)), '')) in ('t','true','yes','y','1')
             then true else false
         end as has_availability,
 
-        cast(coalesce("AVAILABILITY_30", 0) as int) as availability_30,
-        cast(coalesce("NUMBER_OF_REVIEWS", 0) as int) as number_of_reviews,
-        cast(nullif(trim(cast("REVIEW_SCORES_RATING" as text)), '') as numeric) as review_scores_rating,
+        coalesce("AVAILABILITY_30", 0)::int as availability_30,
+        coalesce("NUMBER_OF_REVIEWS", 0)::int as number_of_reviews,
+        cast("REVIEW_SCORES_RATING" as numeric) as review_scores_rating,
 
-        -- ✅ FIX: safe boolean check — compare text, not bigint
-        case
-            when trim(cast("PRICE" as text)) <> '' then true
-            else false
-        end as has_price,
+        -- ✅ safer: just check for not null
+        (case when "PRICE" is not null then true else false end) as has_price,
 
         '{{ t }}' as month_label,
         to_date(replace('{{ t }}','m',''), 'MM_YYYY') as year_month
@@ -65,4 +58,4 @@ with base as (
     {% endfor %}
 )
 
-select * from base
+select * from base;
