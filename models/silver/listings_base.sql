@@ -54,4 +54,4 @@ with base as (
     {% endfor %}
 )
 
-select * from base;
+select * from base
