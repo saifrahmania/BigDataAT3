@@ -22,8 +22,10 @@ with base as (
             WHEN trim("HOST_ID") ~ '^[0-9]+$' THEN "HOST_ID"::bigint
             ELSE NULL
         END AS host_id,
-        nullif(trim("HOST_NAME"),'')                          as host_name,
-        nullif(trim("HOST_SINCE"),'')                         as host_since_raw,
+
+        nullif(trim("HOST_NAME"),'') as host_name,
+        nullif(trim("HOST_SINCE"),'') as host_since_raw,
+    
 
         -- Try to coerce day/month/year and year-month-day patterns
         coalesce(
