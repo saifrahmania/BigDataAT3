@@ -32,7 +32,7 @@ with base as (
         nullif(trim("PROPERTY_TYPE"),'')                        as property_type,
         nullif(trim("ROOM_TYPE"),'')                            as room_type,
         cast("ACCOMMODATES" as int)                             as accommodates,
-        cast(replace("PRICE", ',', '') as numeric)              as price,
+        cast(replace(cast("PRICE" as text), ',', '') as numeric)             as price,
 
         case when lower(coalesce("HAS_AVAILABILITY",'')) in ('t','true','yes','y','1') 
              then true else false end                           as has_availability,
