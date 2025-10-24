@@ -13,11 +13,10 @@ with airbnb_clean as (
         room_type,
         accommodates,
         price::numeric as price,
-        minimum_nights::int,
         number_of_reviews::int,
-        neighbourhood_cleansed as suburb,
-        '2020-05-01'::date as scraped_date
-    from {{ref('listings_base')}}
+        listing_neighbourhood as suburb,
+        year_month
+    from {{ ref('listings_base') }}
     where price is not null
 ),
 lga_map as (
@@ -51,8 +50,9 @@ select
     a.room_type,
     a.accommodates,
     a.price,
-    a.minimum_nights,
     a.number_of_reviews,
+    a.suburb,
+    a.year_month,
     l.lga_name,
     l.lga_code,
     c1.median_age,
