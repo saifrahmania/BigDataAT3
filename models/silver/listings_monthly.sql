@@ -29,4 +29,4 @@ monthly as (
     from b
 )
 
-select * from monthly;
+select * from monthly
