@@ -14,12 +14,12 @@ with base as (
     {% for t in months %}
     select
         CASE
-            WHEN trim("LISTING_ID") ~ '^[0-9]+$' THEN "LISTING_ID"::bigint
+            WHEN trim(cast("LISTING_ID" as text)) ~ '^[0-9]+$' THEN cast("LISTING_ID" as bigint)
             ELSE NULL
         END AS listing_id,
 
         CASE
-            WHEN trim("HOST_ID") ~ '^[0-9]+$' THEN "HOST_ID"::bigint
+            WHEN trim(cast("HOST_ID" as text)) ~ '^[0-9]+$' THEN cast("HOST_ID" as bigint)
             ELSE NULL
         END AS host_id,
 
