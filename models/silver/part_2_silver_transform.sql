@@ -67,4 +67,4 @@ left join lga_map l
 left join census_g01 c1 
     on l.lga_code = c1.lga_code
 left join census_g02 c2 
-    on l.lga_code = c2.lga_code;
+    on l.lga_code = c2.lga_code
