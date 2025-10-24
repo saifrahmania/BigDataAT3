@@ -13,8 +13,9 @@ select
   property_type,
   room_type,
   accommodates,
+  price,
   year_month
-from {{ ref('listings_base') }}
+from {{ ref('silver.listings_base') }}
 where listing_id is not null
 
 {% endsnapshot %}

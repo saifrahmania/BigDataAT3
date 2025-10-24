@@ -12,6 +12,6 @@ select
   lga_code,
   lga_name,
   null::date as year_month
-from {{ source('census', 'nsw_lga_code') }}
+from {{ source('bronze', 'nsw_lga_code') }}
 
 {% endsnapshot %}

@@ -15,13 +15,13 @@ clean-targets: ["target", "dbt_packages"]
 
 models:
   BigDataAT3:
-    +materialized: view     # keep compute light
+    +materialized: view
     silver:
-      +schema: "silver"     # -> dbt_<user>_silver via default generate_schema_name
-      +tags: ["silver"]
+      +schema: dbt_mrahman_silver
+      +materialized: view
     gold:
-      +schema: "gold"       # -> dbt_<user>_gold
-      +tags: ["gold"]
+      +schema: dbt_mrahman_gold
+      +materialized: table
 
 tests:
   +severity: warn           # make non-critical tests non-blocking by default

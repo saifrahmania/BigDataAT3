@@ -1,41 +1,32 @@
 {{ config(
-    materialized = 'table',
-    schema = 'dbt_mrahman_silver',
-    alias = 'listings_monthly'
+    materialized='view',
+    schema='dbt_mrahman_silver'
 ) }}
 
-with base as (
-    select * from {{ ref('listings_base') }}
+with b as (
+    select *
+    from {{ ref('listings_base') }}
 ),
 
-month_extracted as (
+monthly as (
     select
         listing_id,
         host_id,
-        listing_neighbourhood,
+        lower(coalesce(listing_neighbourhood, host_neighbourhood)) as listing_neighbourhood,
         property_type,
         room_type,
         accommodates,
-        price,
-        availability_30,
-        is_active,
-        number_of_stays,
-        estimated_revenue,
-        left(last_scraped, 7) as year_month
-    from base
+        price::numeric                                             as price,
+        has_availability,
+        availability_30::int                                       as availability_30,
+        number_of_reviews::int                                     as number_of_reviews,
+        -- estimated monthly revenue if active: nights_booked * price
+        case
+            when has_availability then greatest(0, 30 - coalesce(availability_30,0))::int * coalesce(price::numeric,0)
+            else 0
+        end                                                        as estimated_revenue,
+        year_month
+    from b
 )
 
-select
-    listing_id,
-    host_id,
-    listing_neighbourhood,
-    property_type,
-    room_type,
-    accommodates,
-    price,
-    availability_30,
-    is_active,
-    number_of_stays,
-    estimated_revenue,
-    year_month
-from month_extracted;
+select * from monthly;
