@@ -14,7 +14,7 @@ select
   host_is_superhost,
   host_neighbourhood,
   year_month
-from {{ ref('silver.listings_base') }}
+from {{ ref('listings_base') }}
 where host_id is not null
 
 {% endsnapshot %}

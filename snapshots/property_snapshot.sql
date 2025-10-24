@@ -15,7 +15,7 @@ select
   accommodates,
   price,
   year_month
-from {{ ref('silver.listings_base') }}
+from {{ ref('listings_base') }}
 where listing_id is not null
 
 {% endsnapshot %}
