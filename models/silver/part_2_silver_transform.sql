@@ -17,7 +17,7 @@ with airbnb_clean as (
         number_of_reviews::int,
         neighbourhood_cleansed as suburb,
         '2020-05-01'::date as scraped_date
-    from bronze.raw_listings
+    from {{ref('listings_base')}}
     where price is not null
 ),
 lga_map as (
