@@ -1,26 +1,88 @@
 {{ config(
-    materialized='table',
-    schema='dbt_mrahman_gold'
+    materialized='view',
+    schema='dbt_mrahman_silver'
 ) }}
 
-with s as (
-  select
-    host_id,
-    max(year_month) as last_month
-  from {{ ref('listings_base') }}
-  group by 1
-),
-latest as (
-  select b.*
-  from {{ ref('listings_base') }} b
-  join s on s.host_id = b.host_id and s.last_month = b.year_month
+with base as (
+
+    {% set months = [
+        'm05_2020','m06_2020','m07_2020','m08_2020',
+        'm09_2020','m10_2020','m11_2020','m12_2020',
+        'm01_2021','m02_2021','m03_2021','m04_2021'
+    ] %}
+
+    {% for t in months %}
+    select
+        -- ✅ Safe numeric conversion for LISTING_ID and HOST_ID
+        CASE
+            WHEN trim(cast("LISTING_ID" as text)) ~ '^[0-9]+$' THEN cast("LISTING_ID" as bigint)
+            ELSE NULL
+        END AS listing_id,
+
+        CASE
+            WHEN trim(cast("HOST_ID" as text)) ~ '^[0-9]+$' THEN cast("HOST_ID" as bigint)
+            ELSE NULL
+        END AS host_id,
+
+        -- ✅ Clean text fields
+        nullif(trim("HOST_NAME"),'') as host_name,
+        nullif(trim("HOST_SINCE"),'') as host_since_raw,
+
+        -- ✅ Parse date fields safely (both DD/MM/YYYY and YYYY-MM-DD)
+        coalesce(
+            to_date("HOST_SINCE", 'DD/MM/YYYY'),
+            to_date("HOST_SINCE", 'YYYY-MM-DD')
+        ) as host_since,
+
+        -- ✅ Boolean normalization
+        case 
+            when lower(coalesce("HOST_IS_SUPERHOST",'')) in ('t','true','yes','y','1') 
+            then true else false 
+        end as host_is_superhost,
+
+        -- ✅ Standardize text
+        lower(nullif(trim("HOST_NEIGHBOURHOOD"),'')) as host_neighbourhood,
+        lower(nullif(trim("LISTING_NEIGHBOURHOOD"),'')) as listing_neighbourhood,
+
+        -- ✅ Property details
+        nullif(trim("PROPERTY_TYPE"),'') as property_type,
+        nullif(trim("ROOM_TYPE"),'') as room_type,
+
+        -- ✅ Numeric conversions
+        cast("ACCOMMODATES" as int) as accommodates,
+
+        -- ✅ Clean price field — remove commas before casting
+        cast(replace(cast("PRICE" as text), ',', '') as numeric) as price,
+
+        -- ✅ Availability flag
+        case 
+            when lower(coalesce("HAS_AVAILABILITY",'')) in ('t','true','yes','y','1') 
+            then true else false 
+        end as has_availability,
+
+        -- ✅ Safe integers
+        cast(coalesce("AVAILABILITY_30",0) as int) as availability_30,
+        cast(coalesce("NUMBER_OF_REVIEWS",0) as int) as number_of_reviews,
+
+        -- ✅ Handle empty review ratings safely
+        cast(nullif(trim(cast("REVIEW_SCORES_RATING" as text)), '') as numeric) as review_scores_rating,
+
+        -- ✅ Safe flag for price presence
+        (CASE 
+            WHEN cast("PRICE" as text) IS NOT NULL 
+                 AND trim(cast("PRICE" as text)) <> '' 
+            THEN true 
+            ELSE false 
+        END) AS has_price,
+
+        -- ✅ Derived month info
+        '{{ t }}' as month_label,
+        to_date(replace('{{ t }}','m',''),'MM_YYYY') as year_month
+
+    from {{ source('bronze', t) }}
+
+    {% if not loop.last %} union all {% endif %}
+    {% endfor %}
 )
 
-select
-  host_id,
-  max(host_name)                        as host_name,
-  max(host_since)                       as host_since,
-  max(host_is_superhost)::boolean       as host_is_superhost,
-  max(host_neighbourhood)               as host_neighbourhood
-from latest
-group by host_id
+select * from base
