@@ -13,69 +13,69 @@ with base as (
 
     {% for t in months %}
     select
-        -- ✅ Safe numeric conversion for LISTING_ID and HOST_ID
+        -- ✅ Safe numeric conversion
         CASE
-            WHEN trim(cast("LISTING_ID" as text)) ~ '^[0-9]+$' THEN cast("LISTING_ID" as bigint)
+            WHEN trim(cast("LISTING_ID" as text)) ~ '^[0-9]+$'
+            THEN cast("LISTING_ID" as bigint)
             ELSE NULL
         END AS listing_id,
 
         CASE
-            WHEN trim(cast("HOST_ID" as text)) ~ '^[0-9]+$' THEN cast("HOST_ID" as bigint)
+            WHEN trim(cast("HOST_ID" as text)) ~ '^[0-9]+$'
+            THEN cast("HOST_ID" as bigint)
             ELSE NULL
         END AS host_id,
 
-        -- ✅ Clean text fields
+        -- ✅ Clean text
         nullif(trim("HOST_NAME"),'') as host_name,
         nullif(trim("HOST_SINCE"),'') as host_since_raw,
 
-        -- ✅ Parse date fields safely (both DD/MM/YYYY and YYYY-MM-DD)
+        -- ✅ Parse date variants
         coalesce(
             to_date("HOST_SINCE", 'DD/MM/YYYY'),
             to_date("HOST_SINCE", 'YYYY-MM-DD')
         ) as host_since,
 
         -- ✅ Boolean normalization
-        case 
-            when lower(coalesce("HOST_IS_SUPERHOST",'')) in ('t','true','yes','y','1') 
-            then true else false 
+        case
+            when lower(coalesce("HOST_IS_SUPERHOST",'')) in ('t','true','yes','y','1')
+            then true else false
         end as host_is_superhost,
 
-        -- ✅ Standardize text
-        lower(nullif(trim("HOST_NEIGHBOURHOOD"),'')) as host_neighbourhood,
+        lower(nullif(trim("HOST_NEIGHBOURHOOD"),''))    as host_neighbourhood,
         lower(nullif(trim("LISTING_NEIGHBOURHOOD"),'')) as listing_neighbourhood,
+        nullif(trim("PROPERTY_TYPE"),'')                as property_type,
+        nullif(trim("ROOM_TYPE"),'')                    as room_type,
+        cast("ACCOMMODATES" as int)                     as accommodates,
 
-        -- ✅ Property details
-        nullif(trim("PROPERTY_TYPE"),'') as property_type,
-        nullif(trim("ROOM_TYPE"),'') as room_type,
+        -- ✅ Handle price robustly
+        case
+            when trim(cast("PRICE" as text)) ~ '^[0-9,.]+$'
+            then cast(replace(cast("PRICE" as text), ',', '') as numeric)
+            else null
+        end as price,
 
-        -- ✅ Numeric conversions
-        cast("ACCOMMODATES" as int) as accommodates,
-
-        -- ✅ Clean price field — remove commas before casting
-        cast(replace(cast("PRICE" as text), ',', '') as numeric) as price,
-
-        -- ✅ Availability flag
-        case 
-            when lower(coalesce("HAS_AVAILABILITY",'')) in ('t','true','yes','y','1') 
-            then true else false 
+        -- ✅ Availability flags
+        case
+            when lower(coalesce("HAS_AVAILABILITY",'')) in ('t','true','yes','y','1')
+            then true else false
         end as has_availability,
 
-        -- ✅ Safe integers
-        cast(coalesce("AVAILABILITY_30",0) as int) as availability_30,
+        cast(coalesce("AVAILABILITY_30",0) as int)   as availability_30,
         cast(coalesce("NUMBER_OF_REVIEWS",0) as int) as number_of_reviews,
 
-        -- ✅ Handle empty review ratings safely
-        cast(nullif(trim(cast("REVIEW_SCORES_RATING" as text)), '') as numeric) as review_scores_rating,
+        -- ✅ Review rating safe cast
+        cast(nullif(trim(cast("REVIEW_SCORES_RATING" as text)),'') as numeric)
+            as review_scores_rating,
 
-        -- ✅ Safe flag for price presence
-        (CASE 
-            WHEN cast("PRICE" as text) IS NOT NULL 
-                 AND trim(cast("PRICE" as text)) <> '' 
-            THEN true 
-            ELSE false 
-        END) AS has_price,
+        -- ✅ Safe flag for price existence (no bigint coercion!)
+        case
+            when trim(cast("PRICE" as text)) <> '' and cast("PRICE" as text) is not null
+            then true
+            else false
+        end as has_price,
 
-        -- ✅ Derived month info
+        -- ✅ Derived temporal info
         '{{ t }}' as month_label,
         to_date(replace('{{ t }}','m',''),'MM_YYYY') as year_month
 
