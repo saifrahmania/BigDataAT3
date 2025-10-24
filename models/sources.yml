@@ -2,23 +2,11 @@ version: 2
 
 sources:
   - name: bronze
+    description: "Raw Airbnb & Census data loaded from GCS by Airflow (Bronze layer)."
     database: postgres
     schema: bronze
+
     tables:
-<<<<<<< HEAD
-      - name: m05_2020
-      - name: m06_2020
-      - name: m07_2020
-      - name: m08_2020
-      - name: m09_2020
-      - name: m10_2020
-      - name: m11_2020
-      - name: m12_2020
-      - name: m01_2021
-      - name: m02_2021
-      - name: m03_2021
-      - name: m04_2021
-=======
       # Airbnb monthly extracts
       - name: "m05_2020"
         description: "Airbnb NSW listings — May 2020."
@@ -46,8 +34,11 @@ sources:
         description: "Airbnb NSW listings — April 2021."
 
       # Census + LGA
->>>>>>> d5f4be604a6c0c62ab332a4ced06bbfe561fee9d
       - name: "2016census_g01_nsw_lga"
+        description: "2016 Census (G01) — Selected person characteristics by sex, NSW LGAs."
       - name: "2016census_g02_nsw_lga"
-      - name: nsw_lga_code
-      - name: nsw_lga_suburb
+        description: "2016 Census (G02) — Selected medians and averages, NSW LGAs."
+      - name: "nsw_lga_code"
+        description: "NSW LGA codes and names."
+      - name: "nsw_lga_suburb"
+        description: "NSW suburbs to LGA mapping."
