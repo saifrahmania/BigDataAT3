@@ -32,14 +32,19 @@ with base as (
         nullif(trim("PROPERTY_TYPE"),'')                        as property_type,
         nullif(trim("ROOM_TYPE"),'')                            as room_type,
         cast("ACCOMMODATES" as int)                             as accommodates,
-        cast(replace(cast("PRICE" as text), ',', '') as numeric)             as price,
+
+        -- Fix 1: ensure PRICE is text before replace()
+        cast(replace(cast("PRICE" as text), ',', '') as numeric) as price,
 
         case when lower(coalesce("HAS_AVAILABILITY",'')) in ('t','true','yes','y','1') 
              then true else false end                           as has_availability,
 
         cast(coalesce("AVAILABILITY_30",0) as int)              as availability_30,
         cast(coalesce("NUMBER_OF_REVIEWS",0) as int)            as number_of_reviews,
-        cast(nullif("REVIEW_SCORES_RATING",'') as numeric)      as review_scores_rating,
+
+        -- ✅ Fix 2: safely handle empty REVIEW_SCORES_RATING
+        cast(nullif(trim(cast("REVIEW_SCORES_RATING" as text)), '') as numeric)
+                                                                as review_scores_rating,
 
         -- Handy derived flags
         (case when "PRICE" is not null and "PRICE" <> '' then true else false end) as has_price,
@@ -54,4 +59,4 @@ with base as (
     {% endfor %}
 )
 
-select * from base
+select * from base;
