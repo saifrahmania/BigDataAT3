@@ -40,6 +40,8 @@ models:
         +materialized: table
 
 snapshots:
-  +target_schema: snapshots
+  BigDataAT3:
+    +schema: snapshots
+    +target_schema: snapshots
 
 # You don't need seeds since you load via Airflow → Bronze.

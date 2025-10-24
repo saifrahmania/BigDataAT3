@@ -1,18 +1,20 @@
-{% snapshot host_snapshot %}
+{% snapshot property_snapshot %}
 {{
   config(
     target_schema='snapshots',
-    unique_key='host_id',
+    unique_key='listing_id',
     strategy='timestamp',
     updated_at='year_month'
   )
 }}
+
 select
-  host_id,
-  host_name,
-  is_superhost,
-  host_neighbourhood,
+  listing_id,
+  property_type,
+  room_type,
+  accommodates,
   year_month
 from {{ ref('listings_base') }}
-where host_id is not null
+where listing_id is not null
+
 {% endsnapshot %}

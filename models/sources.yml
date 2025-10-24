@@ -1,0 +1,47 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: >
+      Raw Airbnb monthly datasets (May 2020 – April 2021) loaded by Airflow from Google Cloud Storage.
+      Each table represents one month of NSW Airbnb listings.
+    schema: bronze
+    tables:
+      - name: m05_2020
+        description: May 2020 Airbnb listings data.
+      - name: m06_2020
+        description: June 2020 Airbnb listings data.
+      - name: m07_2020
+        description: July 2020 Airbnb listings data.
+      - name: m08_2020
+        description: August 2020 Airbnb listings data.
+      - name: m09_2020
+        description: September 2020 Airbnb listings data.
+      - name: m10_2020
+        description: October 2020 Airbnb listings data.
+      - name: m11_2020
+        description: November 2020 Airbnb listings data.
+      - name: m12_2020
+        description: December 2020 Airbnb listings data.
+      - name: m01_2021
+        description: January 2021 Airbnb listings data.
+      - name: m02_2021
+        description: February 2021 Airbnb listings data.
+      - name: m03_2021
+        description: March 2021 Airbnb listings data.
+      - name: m04_2021
+        description: April 2021 Airbnb listings data.
+
+  - name: census
+    description: >
+      NSW Census 2016 datasets used for enriching Airbnb listings with socio-demographic data.
+    schema: bronze
+    tables:
+      - name: nsw_lga_code
+        description: Local Government Area codes and names.        
+      - name: nsw_lga_suburb
+        description: Mapping between suburbs and LGAs.
+      - name: 2016Census_G01_NSW_LGA
+        description: Census demographic data (G01 dataset).
+      - name: 2016Census_G02_NSW_LGA
+        description: Census household and income data (G02 dataset).

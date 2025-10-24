@@ -2,14 +2,16 @@
 {{
   config(
     target_schema='snapshots',
-    unique_key='lga_code',    -- or proper PK in your mapping
+    unique_key='lga_code',
     strategy='timestamp',
-    updated_at='year_month'   -- if you don’t have a month in this ref data, switch to 'check' strategy
+    updated_at='year_month'
   )
 }}
+
 select
   lga_code,
   lga_name,
-  null::date as year_month  -- if no month, consider using check strategy instead
-from {{ source('bronze','nsw_lga_code') }}
+  null::date as year_month
+from {{ source('census', 'nsw_lga_code') }}
+
 {% endsnapshot %}
