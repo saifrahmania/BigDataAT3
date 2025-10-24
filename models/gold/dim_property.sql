@@ -20,4 +20,4 @@ select
   property_type,
   room_type,
   accommodates
-from latest;
+from latest

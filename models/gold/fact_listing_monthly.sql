@@ -19,4 +19,4 @@ with f as (
     year_month
   from {{ ref('listings_monthly') }}
 )
-select * from f;
+select * from f

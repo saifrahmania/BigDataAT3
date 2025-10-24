@@ -43,4 +43,4 @@ select
   total_estimated_revenue_active,
   estimated_revenue_per_host
 from agg
-order by host_neighbourhood_lga, year_month;
+order by host_neighbourhood_lga, year_month

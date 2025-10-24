@@ -59,4 +59,4 @@ SELECT
 FROM airbnb_clean a
 LEFT JOIN lga_map l ON a.suburb = l.suburb
 LEFT JOIN census_g01 c1 ON l.lga_code = c1.lga_code
-LEFT JOIN census_g02 c2 ON l.lga_code = c2.lga_code;
+LEFT JOIN census_g02 c2 ON l.lga_code = c2.lga_code

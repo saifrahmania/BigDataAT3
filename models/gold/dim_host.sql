@@ -23,4 +23,4 @@ select
   max(host_is_superhost)::boolean       as host_is_superhost,
   max(host_neighbourhood)               as host_neighbourhood
 from latest
-group by host_id;
+group by host_id

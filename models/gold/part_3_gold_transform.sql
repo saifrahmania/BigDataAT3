@@ -50,4 +50,4 @@ SELECT
     h.host_is_superhost
 FROM fact_listing f
 LEFT JOIN dim_property p USING (property_type, room_type)
-LEFT JOIN dim_host h USING (host_id);
+LEFT JOIN dim_host h USING (host_id)
