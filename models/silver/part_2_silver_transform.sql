@@ -1,5 +1,11 @@
-WITH airbnb_clean AS (
-    SELECT
+{{ config(
+    materialized='view',
+    schema='dbt_mrahman_silver'
+) }}
+
+-- STEP 1: Clean Airbnb listing data from listings_base
+with airbnb_clean as (
+    select
         listing_id,
         host_id,
         host_name,
@@ -7,38 +13,44 @@ WITH airbnb_clean AS (
         property_type,
         room_type,
         accommodates,
-        price::NUMERIC AS price,
-        minimum_nights::INT,
-        number_of_reviews::INT,
-        neighbourhood_cleansed AS suburb,
-        '2020-05-01'::DATE AS scraped_date
-    FROM bronze.raw_listings
-    WHERE price IS NOT NULL
+        price::numeric as price,
+        number_of_reviews::int as number_of_reviews,
+        coalesce(lower(listing_neighbourhood), lower(host_neighbourhood)) as neighbourhood,
+        year_month
+    from {{ ref('listings_base') }}
+    where price is not null
 ),
-lga_map AS (
-    SELECT
-        suburb,
-        lga_name,
-        lga_code
-    FROM bronze.nsw_lga_suburb
+
+-- STEP 2: LGA mapping data (bronze.nsw_lga_suburb)
+lga_map as (
+    select
+        lower("SUBURB_NAME") as suburb_name,
+        "LGA_NAME" as lga_name
+    from bronze.nsw_lga_suburb
 ),
-census_g01 AS (
-    SELECT
-        lga_code,
-        median_age::INT,
-        median_mortgage_repay_monthly::NUMERIC,
-        median_rent_weekly::NUMERIC
-    FROM bronze."2016census_g01_nsw_lga"
+
+-- STEP 3: Census G01 (demographic data)
+census_g01 as (
+    select
+        "LGA_CODE_2016" as lga_code,
+        "Tot_P_P"::bigint as total_population
+    from bronze."2016census_g01_nsw_lga"
 ),
-census_g02 AS (
-    SELECT
-        lga_code,
-        avg_household_size::NUMERIC,
-        median_tot_prsnl_inc_weekly::NUMERIC
-    FROM bronze."2016census_g02_nsw_lga"
+
+-- STEP 4: Census G02 (median & household data)
+census_g02 as (
+    select
+        "LGA_CODE_2016" as lga_code,
+        "Median_age_persons"::int as median_age,
+        "Median_mortgage_repay_monthly"::numeric as median_mortgage_repay_monthly,
+        "Median_rent_weekly"::numeric as median_rent_weekly,
+        "Median_tot_prsnl_inc_weekly"::numeric as median_tot_prsnl_inc_weekly,
+        "Average_household_size"::numeric as avg_household_size
+    from bronze."2016census_g02_nsw_lga"
 )
 
-SELECT
+-- STEP 5: Join all datasets
+select
     a.listing_id,
     a.host_id,
     a.host_name,
@@ -47,16 +59,20 @@ SELECT
     a.room_type,
     a.accommodates,
     a.price,
-    a.minimum_nights,
     a.number_of_reviews,
+    a.neighbourhood,
+    a.year_month,
     l.lga_name,
-    l.lga_code,
-    c1.median_age,
-    c1.median_mortgage_repay_monthly,
-    c1.median_rent_weekly,
-    c2.avg_household_size,
-    c2.median_tot_prsnl_inc_weekly
-FROM airbnb_clean a
-LEFT JOIN lga_map l ON a.suburb = l.suburb
-LEFT JOIN census_g01 c1 ON l.lga_code = c1.lga_code
-LEFT JOIN census_g02 c2 ON l.lga_code = c2.lga_code;
+    c1.total_population,
+    c2.median_age,
+    c2.median_mortgage_repay_monthly,
+    c2.median_rent_weekly,
+    c2.median_tot_prsnl_inc_weekly,
+    c2.avg_household_size
+from airbnb_clean a
+left join lga_map l
+    on lower(a.neighbourhood) = l.suburb_name
+left join census_g01 c1
+    on l.lga_name = c1.lga_code
+left join census_g02 c2
+    on l.lga_name = c2.lga_code

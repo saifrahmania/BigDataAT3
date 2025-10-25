@@ -13,7 +13,7 @@ select
   host_name,
   host_is_superhost,
   host_neighbourhood,
-  year_month
+  year_month::timestamp as year_month
 from {{ ref('listings_base') }}
 where host_id is not null
 

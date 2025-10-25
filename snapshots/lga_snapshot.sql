@@ -2,16 +2,15 @@
 {{
   config(
     target_schema='snapshots',
-    unique_key='lga_code',
-    strategy='timestamp',
-    updated_at='year_month'
+    unique_key='lga_code_2016',
+    strategy='check',
+    check_cols=['lga_name']
   )
 }}
 
 select
-  lga_code,
-  lga_name,
-  null::date as year_month
-from {{ source('bronze', 'nsw_lga_code') }}
+  "LGA_CODE_2016" as lga_code_2016,
+  "LGA_NAME" as lga_name
+from {{ source('bronze', 'nsw_lga_suburb') }}
 
 {% endsnapshot %}

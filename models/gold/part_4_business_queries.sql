@@ -21,4 +21,4 @@ SELECT
     room_type,
     COUNT(listing_id) AS num_listings
 FROM {{ ref('part_3_gold_transform') }}
-GROUP BY lga_name, room_type;
+GROUP BY lga_name, room_type

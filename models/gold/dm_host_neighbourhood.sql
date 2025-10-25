@@ -8,8 +8,8 @@ with base as (
 ),
 lga_map as (
   select
-    lower(suburb_name) as suburb_name,
-    lower(lga_name)    as lga_name
+    lower("SUBURB_NAME") as suburb_name,
+    lower("LGA_NAME")    as lga_name
   from {{ source('bronze','nsw_lga_suburb') }}
 ),
 f as (
@@ -43,4 +43,4 @@ select
   total_estimated_revenue_active,
   estimated_revenue_per_host
 from agg
-order by host_neighbourhood_lga, year_month;
+order by host_neighbourhood_lga, year_month

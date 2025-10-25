@@ -1,6 +1,6 @@
 {{ config(
-    materialized='view',
-    schema='dbt_mrahman_silver'
+    materialized = 'view',
+    schema = 'dbt_mrahman_silver'
 ) }}
 
 with base as (
@@ -13,50 +13,78 @@ with base as (
 
     {% for t in months %}
     select
-        cast("LISTING_ID" as bigint)                            as listing_id,
-        cast("HOST_ID" as bigint)                               as host_id,
-        nullif(trim("HOST_NAME"),'')                            as host_name,
-        nullif(trim("HOST_SINCE"),'')                           as host_since_raw,
+        -- Listing & Host identifiers
+        CASE
+            WHEN trim(cast("LISTING_ID" as text)) ~ '^[0-9]+$'
+                THEN cast("LISTING_ID" as bigint)
+            ELSE NULL
+        END AS listing_id,
 
-        -- Try to coerce day/month/year and year-month-day patterns
+        CASE
+            WHEN trim(cast("HOST_ID" as text)) ~ '^[0-9]+$'
+                THEN cast("HOST_ID" as bigint)
+            ELSE NULL
+        END AS host_id,
+
+        nullif(trim("HOST_NAME"),'') as host_name,
+        nullif(trim("HOST_SINCE"),'') as host_since_raw,
+
+        -- Parse host_since dates (supports DD/MM/YYYY and YYYY-MM-DD)
         coalesce(
-            to_date("HOST_SINCE", 'DD/MM/YYYY'),
-            to_date("HOST_SINCE", 'YYYY-MM-DD')
-        )                                                       as host_since,
+            to_date("HOST_SINCE",'DD/MM/YYYY'),
+            to_date("HOST_SINCE",'YYYY-MM-DD')
+        ) as host_since,
 
-        case when lower(coalesce("HOST_IS_SUPERHOST",'')) in ('t','true','yes','y','1') 
-             then true else false end                           as host_is_superhost,
+        CASE
+            WHEN lower(coalesce("HOST_IS_SUPERHOST",'')) IN ('t','true','yes','y','1')
+                THEN true ELSE false
+        END AS host_is_superhost,
 
-        lower(nullif(trim("HOST_NEIGHBOURHOOD"),''))            as host_neighbourhood,
-        lower(nullif(trim("LISTING_NEIGHBOURHOOD"),''))         as listing_neighbourhood,
-        nullif(trim("PROPERTY_TYPE"),'')                        as property_type,
-        nullif(trim("ROOM_TYPE"),'')                            as room_type,
-        cast("ACCOMMODATES" as int)                             as accommodates,
+        lower(nullif(trim("HOST_NEIGHBOURHOOD"),''))  as host_neighbourhood,
+        lower(nullif(trim("LISTING_NEIGHBOURHOOD"),'')) as listing_neighbourhood,
+        nullif(trim("PROPERTY_TYPE"),'')              as property_type,
+        nullif(trim("ROOM_TYPE"),'')                  as room_type,
+        cast("ACCOMMODATES" as int)                   as accommodates,
 
-        -- Fix 1: ensure PRICE is text before replace()
-        cast(replace(cast("PRICE" as text), ',', '') as numeric) as price,
+        -- ✅ Safe PRICE handling (fixes bigint/empty string issue)
+        CASE
+            WHEN trim(cast("PRICE" as text)) = '' THEN NULL
+            ELSE cast(NULLIF(regexp_replace(cast("PRICE" as text), '[^0-9.]', '', 'g'), '') as numeric)
+        END AS price,
 
-        case when lower(coalesce("HAS_AVAILABILITY",'')) in ('t','true','yes','y','1') 
-             then true else false end                           as has_availability,
+        CASE
+            WHEN lower(coalesce("HAS_AVAILABILITY",'')) IN ('t','true','yes','y','1')
+                THEN true ELSE false
+        END AS has_availability,
 
-        cast(coalesce("AVAILABILITY_30",0) as int)              as availability_30,
-        cast(coalesce("NUMBER_OF_REVIEWS",0) as int)            as number_of_reviews,
+        cast(coalesce("AVAILABILITY_30",0) as int)    as availability_30,
+        cast(coalesce("NUMBER_OF_REVIEWS",0) as int)  as number_of_reviews,
 
-        -- ✅ Fix 2: safely handle empty REVIEW_SCORES_RATING
-        cast(nullif(trim(cast("REVIEW_SCORES_RATING" as text)), '') as numeric)
-                                                                as review_scores_rating,
+        -- Review score cleanup
+        cast(NULLIF(trim(cast("REVIEW_SCORES_RATING" as text)),'') as numeric) as review_scores_rating,
+        cast(NULLIF(trim(cast("REVIEW_SCORES_ACCURACY" as text)),'') as numeric) as review_scores_accuracy,
+        cast(NULLIF(trim(cast("REVIEW_SCORES_CLEANLINESS" as text)),'') as numeric) as review_scores_cleanliness,
+        cast(NULLIF(trim(cast("REVIEW_SCORES_CHECKIN" as text)),'') as numeric) as review_scores_checkin,
+        cast(NULLIF(trim(cast("REVIEW_SCORES_COMMUNICATION" as text)),'') as numeric) as review_scores_communication,
+        cast(NULLIF(trim(cast("REVIEW_SCORES_VALUE" as text)),'') as numeric) as review_scores_value,
 
-        -- Handy derived flags
-        (case when "PRICE" is not null and "PRICE" <> '' then true else false end) as has_price,
+        -- Derived flag: whether price exists
+        CASE
+            WHEN NULLIF(trim(cast("PRICE" as text)),'') IS NULL THEN false
+            ELSE true
+        END AS has_price,
 
-        -- Month identifier
-        '{{ t }}'                                               as month_label,
-        to_date(replace('{{ t }}','m',''),'MM_YYYY')            as year_month
+        -- Month label
+        '{{ t }}' as month_label,
+        to_date(replace('{{ t }}','m',''),'MM_YYYY') as year_month
 
     from {{ source('bronze', t) }}
 
-    {% if not loop.last %} union all {% endif %}
+    {% if not loop.last %}
+    union all
+    {% endif %}
     {% endfor %}
+
 )
 
 select * from base

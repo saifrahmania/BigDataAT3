@@ -11,4 +11,4 @@ select
   sum(estimated_revenue)                   as total_estimated_revenue
 from {{ ref('listings_monthly') }}
 group by 1,2
-order by 1,2;
+order by 1,2

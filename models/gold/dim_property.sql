@@ -1,5 +1,5 @@
 {{ config(
-    materialized='table',
+    materialized='view',
     schema='dbt_mrahman_gold'
 ) }}
 
@@ -20,4 +20,4 @@ select
   property_type,
   room_type,
   accommodates
-from latest;
+from latest

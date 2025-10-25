@@ -10,4 +10,4 @@ select
   avg(nullif(price,0))                   as avg_price
 from {{ ref('listings_monthly') }}
 group by 1,2
-order by 1,2;
+order by 1,2
