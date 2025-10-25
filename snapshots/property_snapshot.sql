@@ -14,7 +14,7 @@ select
   room_type,
   accommodates,
   price,
-  year_month
+  year_month::timestamp as year_month
 from {{ ref('listings_base') }}
 where listing_id is not null
 
