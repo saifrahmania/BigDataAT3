@@ -1,42 +1,43 @@
-WITH base AS (
-    SELECT * FROM {{ ref('part_2_silver_transform') }}
+{{ config(materialized='view', schema='dbt_mrahman_gold') }}
+
+with base as (
+    select * from {{ ref('part_2_silver_transform') }}
 ),
 
-dim_host AS (
-    SELECT DISTINCT
+dim_host as (
+    select
         host_id,
-        host_name,
-        host_is_superhost,
-        COUNT(listing_id) AS total_listings
-    FROM base
-    GROUP BY 1, 2, 3
+        max(host_name) as host_name,
+        bool_or(host_is_superhost) as host_is_superhost,
+        count(distinct listing_id) as total_listings
+    from base
+    group by host_id
 ),
 
-dim_property AS (
-    SELECT DISTINCT
+dim_property as (
+    select
         property_type,
         room_type,
-        AVG(price) AS avg_price,
-        AVG(accommodates) AS avg_capacity
-    FROM base
-    GROUP BY 1, 2
+        round(avg(price), 2) as avg_price,
+        round(avg(accommodates), 1) as avg_capacity
+    from base
+    group by property_type, room_type
 ),
 
-fact_listing AS (
-    SELECT
+fact_listing as (
+    select
         listing_id,
         host_id,
         lga_name,
         price,
-        minimum_nights,
         number_of_reviews,
         median_age,
         median_rent_weekly,
         median_tot_prsnl_inc_weekly
-    FROM base
+    from base
 )
 
-SELECT
+select
     f.listing_id,
     f.lga_name,
     f.price,
@@ -48,6 +49,6 @@ SELECT
     p.avg_price,
     h.host_name,
     h.host_is_superhost
-FROM fact_listing f
-LEFT JOIN dim_property p USING (property_type, room_type)
-LEFT JOIN dim_host h USING (host_id)
+from fact_listing f
+left join dim_property p using (property_type, room_type)
+left join dim_host h using (host_id)

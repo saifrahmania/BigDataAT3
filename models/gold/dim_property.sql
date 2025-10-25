@@ -1,5 +1,5 @@
 {{ config(
-    materialized='table',
+    materialized='view',
     schema='dbt_mrahman_gold'
 ) }}
 
