@@ -60,4 +60,4 @@ left join dim_property p
   on f.property_type = p.property_type
  and f.room_type = p.room_type
 left join dim_host h
-  on f.host_id = h.host_id;
+  on f.host_id = h.host_id
