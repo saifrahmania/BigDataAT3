@@ -1,4 +1,5 @@
--- 1️⃣ Top 10 expensive suburbs
+{{ config(materialized='table', schema='dbt_mrahman_gold') }}
+
 SELECT
     lga_name,
     ROUND(AVG(price), 2) AS avg_price
@@ -7,7 +8,8 @@ GROUP BY lga_name
 ORDER BY avg_price DESC
 LIMIT 10;
 
--- 2️⃣ Superhosts vs Non-superhosts average prices
+
+{{ config(materialized='table', schema='dbt_mrahman_gold') }}
 SELECT
     host_is_superhost,
     ROUND(AVG(price), 2) AS avg_price,
@@ -15,7 +17,7 @@ SELECT
 FROM {{ ref('part_3_gold_transform') }}
 GROUP BY host_is_superhost;
 
--- 3️⃣ Room type distribution per LGA
+{{ config(materialized='table', schema='dbt_mrahman_gold') }}
 SELECT
     lga_name,
     room_type,
