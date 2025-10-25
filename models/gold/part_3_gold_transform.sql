@@ -50,5 +50,8 @@ select
     h.host_name,
     h.host_is_superhost
 from fact_listing f
-left join dim_property p using (property_type, room_type)
-left join dim_host h using (host_id)
+LEFT JOIN dim_property p
+  ON f.property_type = p.property_type
+  AND f.room_type = p.room_type
+LEFT JOIN dim_host h
+  ON f.host_id = h.host_id
