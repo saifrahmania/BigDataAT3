@@ -3,14 +3,15 @@
   config(
     target_schema='snapshots',
     unique_key='lga_code_2016',
-    strategy='check',
-    check_cols=['lga_name']
+    strategy='timestamp',
+    updated_at='year_month'
   )
 }}
 
 select
   "LGA_CODE_2016" as lga_code_2016,
-  "LGA_NAME" as lga_name
-from {{ source('bronze', 'nsw_lga_suburb') }}
+  null::varchar as lga_name,
+  null::date as year_month
+from bronze."2016census_g01_nsw_lga"
 
 {% endsnapshot %}
