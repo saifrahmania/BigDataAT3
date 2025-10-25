@@ -4,6 +4,7 @@ with base as (
     select * from {{ ref('part_2_silver_transform') }}
 ),
 
+-- 1️⃣ Host dimension
 dim_host as (
     select
         host_id,
@@ -14,6 +15,7 @@ dim_host as (
     group by host_id
 ),
 
+-- 2️⃣ Property dimension
 dim_property as (
     select
         property_type,
@@ -24,10 +26,13 @@ dim_property as (
     group by property_type, room_type
 ),
 
+-- 3️⃣ Fact table
 fact_listing as (
     select
         listing_id,
         host_id,
+        property_type,
+        room_type,
         lga_name,
         price,
         number_of_reviews,
@@ -37,6 +42,7 @@ fact_listing as (
     from base
 )
 
+-- 4️⃣ Final join
 select
     f.listing_id,
     f.lga_name,
@@ -50,8 +56,8 @@ select
     h.host_name,
     h.host_is_superhost
 from fact_listing f
-LEFT JOIN dim_property p
-  ON f.property_type = p.property_type
-  AND f.room_type = p.room_type
-LEFT JOIN dim_host h
-  ON f.host_id = h.host_id
+left join dim_property p
+  on f.property_type = p.property_type
+ and f.room_type = p.room_type
+left join dim_host h
+  on f.host_id = h.host_id;
